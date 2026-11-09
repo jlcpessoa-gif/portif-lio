@@ -60,7 +60,9 @@
     },
     {
       "nome": "Color grading",
-      "texto": "Correção e look de cor para dar unidade e clima a cada cena."
+      "texto": "Correção e look de cor para dar unidade e clima a cada cena.",
+      "antes": "cg-antes",
+      "depois": "cg-depois"
     },
     {
       "nome": "Reels, Shorts e TikTok",
