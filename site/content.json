@@ -1,0 +1,280 @@
+{
+  "nome": "Júlio César",
+  "funcao": "Editor de vídeo",
+  "disponibilidade": {
+    "texto": "Disponível para projetos",
+    "ph": true
+  },
+  "cidade": {
+    "texto": "Brasil",
+    "ph": true
+  },
+  "fuso": "America/Sao_Paulo",
+  "foto": "188381caa18ed300e06bb34976de81cb",
+  "intro": {
+    "texto": "Editor de vídeo. Transformo horas de material bruto em filmes, comerciais e vídeos para a internet que prendem do primeiro ao último frame.",
+    "ph": true
+  },
+  "sobre": {
+    "texto": "Comecei editando por curiosidade e nunca mais parei. Hoje cuido do corte, da cor e do som de cada projeto, sempre buscando o ritmo certo para a história que precisa ser contada.",
+    "ph": true
+  },
+  "sobre2": {
+    "texto": ""
+  },
+  "ficha": [
+    {
+      "k": "Nome",
+      "texto": "Júlio César"
+    },
+    {
+      "k": "Base",
+      "texto": "São Paulo, SP"
+    },
+    {
+      "k": "Experiência",
+      "texto": "3 anos editando"
+    },
+    {
+      "k": "Especialidade",
+      "texto": "Motion, Reels e YouTube"
+    },
+    {
+      "k": "Formação",
+      "texto": "Técnico em Produção AudioVisual"
+    },
+    {
+      "k": "Idiomas",
+      "texto": "Português",
+      "ph": true
+    },
+    {
+      "k": "Atendimento",
+      "texto": "Remoto "
+    }
+  ],
+  "servicos": [
+    {
+      "nome": "Montagem e narrativa",
+      "texto": "Organizo o material, encontro a história e construo o ritmo do vídeo."
+    },
+    {
+      "nome": "Color grading",
+      "texto": "Correção e look de cor para dar unidade e clima a cada cena."
+    },
+    {
+      "nome": "Reels, Shorts e TikTok",
+      "texto": "Cortes verticais com gancho forte, legendas animadas e ritmo de rede social."
+    },
+    {
+      "nome": "Motion graphics",
+      "texto": "Títulos, letterings e animações que reforçam a mensagem."
+    },
+    {
+      "nome": "Som e mixagem",
+      "texto": "Trilha, efeitos e volume certo para cada plataforma."
+    }
+  ],
+  "ferramentas": [
+    "Premiere Pro",
+    "After Effects",
+    "CapCut"
+  ],
+  "tipos": [
+    "Fashion Film",
+    "Reels",
+    "YouTube",
+    "Motion",
+    "Cortes"
+  ],
+  "projetos": [
+    {
+      "titulo": "Fashion Film",
+      "cliente": "Ensaio de moda streetwear",
+      "ano": "2025",
+      "tipo": "Fashion Film",
+      "formato": "9:16",
+      "duracao": "00:00:28:23",
+      "papel": "Montagem e finalização",
+      "ferramentas": "Premiere Pro",
+      "link": "",
+      "capa": "ecf18a89f9bbef85f5bea03ee5c089bb",
+      "exemplo": false,
+      "legenda": "",
+      "descricao": "A edição transforma um ensaio de moda em uma peça curta, rápida e cheia de atitude, feita para prender o olhar no feed.\n\nPeculiaridades do workflow:\n\n• Abertura em silhueta: o filme começa com os modelos no escuro, contra as luzes do estúdio, antes de revelar o look.\n\n• Ritmo acelerado: cerca de 20 cortes em 29 segundos, alternando planos gerais, médios e closes.\n\n• Detalhes de styling: inserts de acessórios (relógio, correntes, óculos, gorro e boné) para valorizar as peças.\n\n• Transições com movimento: arrastes de câmera e motion blur conectando um plano ao outro sem perder energia.\n\n• Flashes e bastidores: quadros estourados em branco e um plano da câmera em ação dão o clima de sessão de fotos.\n\n• Vertical nativo (9:16): composição pensada para Reels, TikTok e Stories, entregue em 1080×1920.",
+      "video": "234ecb7d3e1ef7f54f1645dcdf2c6d8e"
+    },
+    {
+      "titulo": "Cortes de podcast",
+      "cliente": "Podcast",
+      "ano": "2026",
+      "tipo": "Reels",
+      "formato": "9:16",
+      "duracao": "00:01:17:23",
+      "papel": "Cortes e legendas",
+      "ferramentas": "Premiere Pro.",
+      "link": "",
+      "capa": "1074c4cd58b65efa146efe8f3f9124d6",
+      "exemplo": true,
+      "legenda": "",
+      "descricao": "Corte de podcast com foco em retenção e clareza de mensagem. 🎬✂️\n\nProjeto de edição focado em transformar um trecho longo de podcast em um corte dinâmico para redes sociais.\n\nPeculiaridades do workflow:\n\n• Cortes secos e ritmo: Eliminação de pausas mortas e vícios de linguagem mantendo a naturalidade da fala.\n\n• Legendas dinâmicas: Sincronização palavra por palavra com destaque em palavras-chave para reter a atenção sem áudio.\n\n• Enquadramento vertical (9:16): Reenquadramento e alternância de planos para dar dinamismo visual à narrativa.\n\n• Mixagem básica: Equalização da voz e sound design sutil para valorizar o gancho inicial.",
+      "video": "62ca7760b26f17e27be805e58a3f22ab"
+    },
+    {
+      "titulo": "Vídeo dinâmico para YouTube",
+      "cliente": "MedCof",
+      "ano": "2026",
+      "tipo": "YouTube",
+      "formato": "16:9",
+      "duracao": "00:09:19:13",
+      "papel": "Edição completa",
+      "ferramentas": "Premiere Pro, AfterEffects",
+      "link": "https://www.youtube.com/watch?v=m7vaB0QF6Xo&t=99s",
+      "capa": "d3f47e9a34bf8f211cd979f08f7fe7a8",
+      "exemplo": true,
+      "legenda": "",
+      "descricao": "Edição completa de um episódio de 9 minutos com um único apresentador, pensada para manter o ritmo do começo ao fim.\n\nPeculiaridades do workflow:\n\n• Abertura com gancho: as falas mais fortes do episódio entram antes da vinheta para prender a atenção nos primeiros segundos.\n\n• Vinheta e identidade do quadro: abertura e encerramento com a marca \"Choro, café & questão\".\n\n• Troca de planos: alternância entre plano aberto e close para dar dinamismo a um formato com uma pessoa só.\n\n• Punch-ins em preto e branco: zooms dramáticos que marcam as reações e os momentos de humor.\n\n• Inserts de memes: referências da cultura pop entrando no tempo certo para reforçar a piada.\n\n• Chamada para ação: QR code na tela convidando o público a mandar o próprio áudio para o quadro.",
+      "video": "1628086ecc454b95eeb4a1c2a8e3c689"
+    },
+    {
+      "titulo": "Quadro de PodCast",
+      "cliente": "MedCof",
+      "ano": "2026",
+      "tipo": "YouTube",
+      "formato": "16:9",
+      "duracao": "00:11:29:03",
+      "papel": "Edição Completa",
+      "ferramentas": "Premiere Pro, AfterEffects",
+      "link": "https://www.youtube.com/watch?v=b3TUNwQHM9M&t=1s",
+      "capa": "169e089838c84c97e050ae377cb24bff",
+      "exemplo": true,
+      "legenda": "— O verão começa quando você decide.",
+      "descricao": "Vídeo dinâmico de um quadro para YouTube.",
+      "video": "bb8a5831ff66c8bf51fe340bfe59ac9d"
+    },
+    {
+      "titulo": "Motion do QUIZ",
+      "cliente": "Autoria Própria ",
+      "ano": "2026",
+      "tipo": "Motion",
+      "formato": "16:9",
+      "duracao": "00:00:30:00",
+      "papel": "Motion design e edição",
+      "ferramentas": "After Effects, Premiere Pro, Claude Code",
+      "link": "",
+      "capa": "04a556e0e52ff9d01bb2394e06509333",
+      "exemplo": false,
+      "legenda": "",
+      "descricao": "Uma peça curta que transforma dados e telas de produto em uma narrativa clara, com cara de marca premium.\n\nPeculiaridades do workflow:\n\n• Interface animada: telas do produto recriadas em motion, com cursor simulando a resposta do aluno e o feedback de certo e errado.\n\n• Tipografia cinética: contraste entre sans-serif pesada e serifada itálica para dar ritmo e hierarquia a cada mensagem.\n\n• Carrossel de cards: os padrões de erro deslizam lateralmente com desfoque de movimento, um por vez, guiando a leitura.\n\n• Narração sincronizada: locução e legendas na parte inferior da tela, no tempo exato de cada animação.\n\n• Identidade monocromática: preto e branco do começo ao fim, deixando o conteúdo como protagonista.\n\n• Fechamento com chamada para ação: o vídeo termina no próximo desafio e no botão \"Começar o treino\".\n\n• Entrega em 1920×1080 a 60 fps para animações bem suaves.",
+      "video": "0f67741b78c1367293d5cb7700c17254"
+    },
+    {
+      "titulo": "Motion feito 100% com IA",
+      "cliente": "Autoria Própria",
+      "ano": "2026",
+      "tipo": "Motion",
+      "formato": "9:16",
+      "duracao": "00:00:19:22",
+      "papel": "Roteiro, direção e montagem",
+      "ferramentas": "Claude + HyperFrames, Gemini TTS, MusicGen",
+      "link": "",
+      "capa": "e05694cefa745fab6f1b9cb70f83f5c7",
+      "exemplo": false,
+      "legenda": "",
+      "descricao": "Vídeo vertical que explica, em 20 segundos, como criar vídeos com inteligência artificial, e que foi ele mesmo produzido inteiramente com IA: voz, música e animações.\n\nPeculiaridades do workflow:\n\n• Pipeline 100% IA: locução gerada no Gemini TTS, trilha no MusicGen e animações criadas com Claude + HyperFrames.\n\n• Tipografia cinética: títulos grandes e pesados que entram em sequência, com palavras de destaque em laranja.\n\n• Passo a passo visual: três etapas numeradas (escrever o prompt, gerar as cenas, ajustar e exportar) mostradas em telas de interface animadas.\n\n• Revelação no final: a virada \"E sabe o melhor?\" lista cada elemento feito por IA e fecha com o selo \"100% feito por IA\".\n\n• Legendas sincronizadas: cada frase da narração aparece na tela no tempo da fala, para quem assiste sem som.\n\n• Vertical nativo (9:16): pensado para Reels, TikTok e Shorts, entregue em 1080×1920.",
+      "video": "5b9d4dce557aae3ffef5ad902ea94c41"
+    }
+  ],
+  "email": {
+    "texto": "jlc.pessoa@gmail.com"
+  },
+  "whatsapp": "11 99552-3946",
+  "redes": [
+    {
+      "nome": "Instagram",
+      "usuario": "@jcesar.cp",
+      "url": "https://www.instagram.com/jcesar.cp/"
+    },
+    {
+      "nome": "x",
+      "usuario": "@juliocfx",
+      "url": "https://x.com/juliocfx"
+    },
+    {
+      "nome": "LinkedIn",
+      "usuario": "Julio Cesar Pessoa",
+      "url": "www.linkedin.com/in/julio-cesar-pessoa-35954a357"
+    }
+  ],
+  "animacao": {
+    "cores": {
+      "destaque": "#e5484d",
+      "fundo": "#0e0e0d",
+      "texto": "#e9e7e2"
+    },
+    "nome": {
+      "tamanho": 0.6,
+      "duracao": 0.56,
+      "intervalo": 45
+    },
+    "abertura": {
+      "status": {
+        "at": 0.08,
+        "dur": 1.1,
+        "ease": "cubic-bezier(0.22, 1, 0.36, 1)"
+      },
+      "nome": {
+        "at": 0,
+        "dur": 0.56,
+        "ease": "cubic-bezier(0.34, 1.89, 0.64, 1)"
+      },
+      "foto": {
+        "at": 0.02,
+        "dur": 1.4,
+        "ease": "cubic-bezier(0.34, 1.4, 0.64, 1)"
+      },
+      "texto": {
+        "at": 0.52,
+        "dur": 1.1,
+        "ease": "cubic-bezier(0.22, 1, 0.36, 1)"
+      },
+      "botoes": {
+        "at": 0.64,
+        "dur": 1.1,
+        "ease": "cubic-bezier(0.22, 1, 0.36, 1)"
+      }
+    },
+    "curva": {
+      "duracao": 0.9,
+      "ease": [
+        0.22,
+        1,
+        0.36,
+        1
+      ]
+    },
+    "ima": {
+      "raio": 200,
+      "forca": 20,
+      "suavidade": 0.1
+    },
+    "parallax": 0.07,
+    "faixa": {
+      "velocidade": 1.1,
+      "reacao": 1,
+      "inclinacao": 0.25
+    },
+    "previa": {
+      "suavidade": 0.16
+    },
+    "corte": {
+      "entrada": 460,
+      "pausa": 240,
+      "saida": 600
+    },
+    "transicao": {
+      "match": 0.65,
+      "deslize": 0.55
+    }
+  }
+}
