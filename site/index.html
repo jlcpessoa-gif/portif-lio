@@ -723,8 +723,10 @@ const txt = v => typeof v === "string" ? v : (v && v.texto) || "";
 const put = (el, v) => { el.textContent = txt(v); el.classList.toggle("ph", !!(v && v.ph)); };
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const lerp = (a, b, t) => a + (b - a) * t;
-const MEDIA = {"d3f47e9a34bf8f211cd979f08f7fe7a8": "d3f47e9a34bf8f211cd979f08f7fe7a8.jpg", "04a556e0e52ff9d01bb2394e06509333": "04a556e0e52ff9d01bb2394e06509333.jpg", "ecf18a89f9bbef85f5bea03ee5c089bb": "ecf18a89f9bbef85f5bea03ee5c089bb.jpg", "1074c4cd58b65efa146efe8f3f9124d6": "1074c4cd58b65efa146efe8f3f9124d6.jpg", "bcb02679b9024fbf0bfe4efb795ef776": "bcb02679b9024fbf0bfe4efb795ef776.jpg", "169e089838c84c97e050ae377cb24bff": "169e089838c84c97e050ae377cb24bff.jpg", "62ca7760b26f17e27be805e58a3f22ab": "62ca7760b26f17e27be805e58a3f22ab.mp4", "singular-cast-1080p": "singular-cast-1080p.mp4", "0f67741b78c1367293d5cb7700c17254": "0f67741b78c1367293d5cb7700c17254.mp4", "188381caa18ed300e06bb34976de81cb": "188381caa18ed300e06bb34976de81cb.jpg", "5b9d4dce557aae3ffef5ad902ea94c41": "5b9d4dce557aae3ffef5ad902ea94c41.mp4", "e05694cefa745fab6f1b9cb70f83f5c7": "e05694cefa745fab6f1b9cb70f83f5c7.jpg", "bb8a5831ff66c8bf51fe340bfe59ac9d": "bb8a5831ff66c8bf51fe340bfe59ac9d.mp4", "4d5aa3a513cec9aca4d25ae57871bcfd": "4d5aa3a513cec9aca4d25ae57871bcfd.jpg", "234ecb7d3e1ef7f54f1645dcdf2c6d8e": "234ecb7d3e1ef7f54f1645dcdf2c6d8e.mp4"};
+const MEDIA = {"d3f47e9a34bf8f211cd979f08f7fe7a8": "d3f47e9a34bf8f211cd979f08f7fe7a8.jpg", "04a556e0e52ff9d01bb2394e06509333": "04a556e0e52ff9d01bb2394e06509333.jpg", "ecf18a89f9bbef85f5bea03ee5c089bb": "ecf18a89f9bbef85f5bea03ee5c089bb.jpg", "1074c4cd58b65efa146efe8f3f9124d6": "1074c4cd58b65efa146efe8f3f9124d6.jpg", "bcb02679b9024fbf0bfe4efb795ef776": "bcb02679b9024fbf0bfe4efb795ef776.jpg", "169e089838c84c97e050ae377cb24bff": "169e089838c84c97e050ae377cb24bff.jpg", "62ca7760b26f17e27be805e58a3f22ab": "62ca7760b26f17e27be805e58a3f22ab.mp4", "singular-cast-1080p": "singular-cast-1080p.mp4", "0f67741b78c1367293d5cb7700c17254": "0f67741b78c1367293d5cb7700c17254.mp4", "188381caa18ed300e06bb34976de81cb": "188381caa18ed300e06bb34976de81cb.jpg", "5b9d4dce557aae3ffef5ad902ea94c41": "5b9d4dce557aae3ffef5ad902ea94c41.mp4", "e05694cefa745fab6f1b9cb70f83f5c7": "e05694cefa745fab6f1b9cb70f83f5c7.jpg", "bb8a5831ff66c8bf51fe340bfe59ac9d": "bb8a5831ff66c8bf51fe340bfe59ac9d.mp4", "4d5aa3a513cec9aca4d25ae57871bcfd": "4d5aa3a513cec9aca4d25ae57871bcfd.jpg", "234ecb7d3e1ef7f54f1645dcdf2c6d8e": "234ecb7d3e1ef7f54f1645dcdf2c6d8e.mp4", "prev-0f67741b": "prev-0f67741b.mp4", "prev-234ecb7d": "prev-234ecb7d.mp4", "prev-5b9d4dce": "prev-5b9d4dce.mp4", "prev-62ca7760": "prev-62ca7760.mp4", "prev-bb8a5831": "prev-bb8a5831.mp4", "prev-singular": "prev-singular.mp4"};
 const blob = id => id && MEDIA[id] ? "media/" + MEDIA[id] : "";
+// prévia leve (480px, 8 s, sem áudio) usada na lista; o vídeo completo só carrega na página do projeto
+const prevBlob = id => { const k = "prev-" + String(id || "").slice(0, 8); return MEDIA[k] ? "media/" + MEDIA[k] : blob(id); };
 const safeUrl = u => { u = String(u || "").trim(); if (/^www\./i.test(u)) u = "https://" + u; return /^https?:\/\//i.test(u) ? u : ""; };
 const slug = s => "projeto-" + (String(s || "sem-titulo").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "sem-titulo");
 const clipName = i => `A0${pad(Math.floor(i/3)+1)}_C${String(i+1).padStart(3,"0")}`;
@@ -828,7 +830,7 @@ const preview = (() => {
   function load(L, p) {
     L.key = p.slug; L.el.classList.remove("ready");
     if (p.capa) { L.img.src = blob(p.capa); L.img.hidden = false; } else { L.img.hidden = true; L.img.removeAttribute("src"); }
-    if (p.video && !reduce) { L.vid.src = blob(p.video); L.vid.hidden = false; L.vid.muted = true; }
+    if (p.video && !reduce) { L.vid.src = prevBlob(p.video); L.vid.hidden = false; L.vid.muted = true; }
     else { pause(L); L.vid.hidden = true; L.vid.removeAttribute("src"); }
   }
   function showProject(p) {
