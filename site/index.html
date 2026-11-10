@@ -479,22 +479,23 @@ header.top { view-transition-name: site-header; }
 .rl-list .ok { color: var(--fg); }
 
 /* Motion: curva de animação ao vivo */
-.mo { --mo-ease: cubic-bezier(.22, 1, .36, 1); display: grid; grid-template-columns: minmax(0, 1fr) 200px; gap: 16px; align-items: stretch; }
-.mo-stage { background: #070707; color: #f1efe9; min-height: 220px; padding: 22px 22px 26px; display: grid; align-content: space-between; gap: 18px; position: relative; overflow: hidden; }
-.mo-stage .burn { position: static; font-size: 10px; }
-.mo-word { display: flex; overflow: hidden; font-weight: 500; font-size: clamp(44px, 8vw, 84px); letter-spacing: -.05em; line-height: 1; padding-bottom: .1em; }
-.mo-word span { display: inline-block; animation: moLetter 3.2s var(--mo-ease) infinite; animation-delay: calc(var(--i) * 70ms); }
-@keyframes moLetter { 0% { transform: translateY(112%) rotate(7deg); opacity: 1; } 28% { transform: none; } 84% { transform: none; opacity: 1; } 100% { transform: none; opacity: 0; } }
-.mo-track { position: relative; height: 14px; border-bottom: 1px solid rgba(241,239,233,.25); }
-.mo-track i { position: absolute; left: 0; bottom: -7px; width: 14px; height: 14px; background: var(--rec); border-radius: 50%; animation: moDot 3.2s var(--mo-ease) infinite; }
-@keyframes moDot { 0% { left: 0; } 40% { left: calc(100% - 14px); } 66% { left: calc(100% - 14px); } 100% { left: 0; } }
-.mo.re .mo-word span, .mo.re .mo-track i { animation: none; }
+.mo { display: grid; grid-template-columns: minmax(0, 1fr) 200px; gap: 16px; align-items: stretch; }
+.mo-stage { background: #070707; color: #f1efe9; min-height: 220px; padding: 20px 22px 26px; display: grid; align-content: space-between; gap: 16px; position: relative; overflow: hidden; }
+.mo-top { display: flex; justify-content: space-between; gap: 12px; font-size: 10px; color: rgba(241,239,233,.7); }
+.mo-tc { font-variant-numeric: tabular-nums; color: #f1efe9; }
+.mo-word { display: flex; overflow: hidden; font-weight: 500; font-size: clamp(44px, 8vw, 84px); letter-spacing: -.05em; line-height: 1; padding: .22em 0 .1em; margin-top: -.22em; }
+.mo-word span { display: inline-block; will-change: transform; }
+.mo-track { position: relative; height: 22px; margin-top: 6px; background: repeating-linear-gradient(90deg, rgba(241,239,233,.3) 0 1px, transparent 1px 10%) 0 100% / 100% 6px no-repeat; border-bottom: 1px solid rgba(241,239,233,.25); }
+.mo-track::after { content: ""; position: absolute; left: 0; bottom: 0; width: 1px; height: 1px; }
+.mo-track i { position: absolute; left: 0; top: 0; width: 1px; height: 100%; background: var(--rec); will-change: transform; }
+.mo-track i::before { content: ""; position: absolute; top: -1px; left: -4px; width: 9px; height: 7px; background: var(--rec); clip-path: polygon(0 0, 100% 0, 50% 100%); }
 .mo-side { display: grid; gap: 10px; align-content: start; }
 .mo-curve { width: 100%; height: auto; display: block; background: var(--bg-2); border: 1px solid var(--line); }
 .mo-curve .g { stroke: var(--line); stroke-width: 1; fill: none; }
 .mo-curve .h { stroke: var(--faint); stroke-width: 1; fill: none; }
 .mo-curve .c { stroke: var(--fg); stroke-width: 2.5; fill: none; }
-.mo-curve circle { fill: var(--rec); }
+.mo-curve .hd { fill: var(--faint); }
+.mo-curve .gd { fill: var(--rec); }
 .mo-btns { display: flex; flex-wrap: wrap; gap: 6px; }
 .mo-btns button { background: none; border: 1px solid var(--line); color: var(--muted); font: 400 14px/1 var(--f-sans); cursor: pointer; transition: color .2s, border-color .2s, background .2s; }
 .mo-btns button:hover { color: var(--fg); border-color: var(--fg); }
@@ -1018,6 +1019,16 @@ const MO_EASES = [
   { n: "Elástico", b: [.34, 1.56, .64, 1] },
 ];
 const SND = {"a":[0.62,0.65,0.65,0.64,0.63,0.53,0.57,0.53,0.61,0.47,0.43,0.46,0.54,0.58,0.49,0.62,0.51,0.47,0.54,0.62,0.57,0.49,0.45,0.48,0.56,0.63,0.47,0.43,0.54,0.55,0.6,0.53,0.54,0.62,0.53,0.49,0.56,0.52,0.53,0.47,0.43,0.54,0.49,0.61,0.58,0.55,0.58,0.59,0.49,0.58,0.55,0.58,0.51,0.58,0.53,0.51,0.48,0.43,0.45,0.54,0.65,0.66,0.57,0.61,0.49,0.52,0.6,0.52,0.65,0.66,0.66,0.66,0.66,0.67,0.68,0.68,0.68,0.67,0.67,0.68,0.69,0.67,0.68,0.68,0.67,0.67,0.66,0.53,0.43,0.43,0.43,0.47,0.45,0.4,0.43,0.38],"d":[0.85,0.88,0.85,0.87,0.88,0.85,0.89,0.85,0.87,0.68,0.49,0.71,0.81,0.87,0.79,0.84,0.82,0.79,0.83,0.85,0.81,0.78,0.76,0.81,0.88,0.91,0.73,0.6,0.84,0.77,0.84,0.84,0.87,0.89,0.85,0.79,0.83,0.82,0.81,0.72,0.61,0.84,0.79,0.89,0.86,0.81,0.84,0.86,0.73,0.88,0.83,0.88,0.79,0.85,0.84,0.85,0.8,0.5,0.75,0.86,0.9,0.91,0.84,0.84,0.82,0.8,0.85,0.84,0.91,0.92,0.91,0.92,0.92,0.91,0.9,0.9,0.89,0.86,0.86,0.84,0.91,0.81,0.77,0.81,0.86,0.85,0.87,0.62,0.55,0.48,0.47,0.8,0.73,0.53,0.75,0.6],"c":[1,2,3,4,8,13,15,18,19,20,25,28,29,30,33,36,38,43,44,45,46,47,49,51,53,59,60,61,62,63,65,66,68,69,74,75,76,78,79,80,81,84,85,86,94,95]};
+const bezier = (x1, y1, x2, y2) => {
+  const cx = 3 * x1, bx = 3 * (x2 - x1) - cx, ax = 1 - cx - bx, cy = 3 * y1, by = 3 * (y2 - y1) - cy, ay = 1 - cy - by;
+  const X = t => ((ax * t + bx) * t + cx) * t, Y = t => ((ay * t + by) * t + cy) * t;
+  return x => {
+    if (x <= 0) return 0; if (x >= 1) return 1;
+    let lo = 0, hi = 1, t = x;
+    for (let i = 0; i < 24; i++) { const v = X(t); if (Math.abs(v - x) < 1e-5) break; if (v < x) lo = t; else hi = t; t = (lo + hi) / 2; }
+    return Y(t);
+  };
+};
 const RL_LIM = 8, RL_CUTS = [2.8, 4.17, 5.17, 6.5];   // cortes reais do Fashion Film nos primeiros 8 s
 
 function demoHTML(kind, s) {
@@ -1042,9 +1053,9 @@ function demoHTML(kind, s) {
     return `<div class="rl" data-vid="${esc(pj.video || "")}"><figure class="rl-ph raw"><div class="rl-phone" ${bg}>${v}<span class="burn"><span class="rec"></span>BRUTO</span><span class="burn br">A001_C001</span></div><figcaption class="mono">Cru</figcaption></figure><figure class="rl-ph ed"><div class="rl-phone" ${bg}>${v}<span class="burn"><span class="rec"></span>FINAL</span><div class="rl-cut"><span>CORTE 1/${RL_CUTS.length + 1}</span></div><div class="rl-bar"><i></i>${ticks}</div></div><figcaption class="mono">Editado</figcaption></figure><ul class="rl-list"><li><span class="k mono">Cor</span><span class="x">imagem lavada, sem look</span><span class="ok">look de cor aplicado</span></li><li><span class="k mono">Ritmo</span><span class="x">um plano só, sem corte</span><span class="ok">${RL_CUTS.length + 1} planos em ${RL_LIM} s, cortes no tempo certo</span></li><li><span class="k mono">Entrega</span><span class="ok">vertical 9:16, 1080×1920, pronto para Reels</span></li></ul></div>`;
   }
   if (kind === "motion") {
-    const word = "Motion".split("").map((c, i) => `<span style="--i:${i}">${c}</span>`).join("");
+    const word = "Motion".split("").map(c => `<span>${c}</span>`).join("");
     const btns = MO_EASES.map((e, i) => `<button type="button" data-e="${i}" aria-pressed="${i === 2}">${e.n}</button>`).join("");
-    return `<div class="mo"><div class="mo-stage"><span class="burn mono">Mesma animação, curvas diferentes</span><div class="mo-word" aria-hidden="true">${word}</div><div class="mo-track" aria-hidden="true"><i></i></div></div><div class="mo-side"><svg class="mo-curve" viewBox="-10 -64 120 184" aria-hidden="true"><path class="g" d="M0 100H100M0 0H100M0 0V100M100 0V100"/><path class="h"></path><path class="c"></path><circle r="4"></circle><circle r="4"></circle></svg><div class="mo-btns">${btns}</div><span class="mo-name mono"></span></div></div>`;
+    return `<div class="mo"><div class="mo-stage"><div class="mo-top mono"><span>Mesma animação, curvas diferentes</span><span class="mo-tc">00:00:00:00</span></div><div class="mo-word" aria-hidden="true">${word}</div><div class="mo-track" aria-hidden="true"><i></i></div></div><div class="mo-side"><svg class="mo-curve" viewBox="-10 -64 120 184" aria-hidden="true"><path class="g" d="M0 100H100M0 0H100M0 0V100M100 0V100"/><path class="h"></path><path class="c"></path><circle class="hd" r="3.5"></circle><circle class="hd" r="3.5"></circle><circle class="gd" r="5"></circle></svg><div class="mo-btns">${btns}</div><span class="mo-name mono"></span></div></div>`;
   }
   return "";
 }
@@ -1159,19 +1170,43 @@ const DEMOS = {
   motion: {
     init(li) {
       const mo = li.querySelector(".mo"), svg = mo.querySelector(".mo-curve"), btns = [...mo.querySelectorAll(".mo-btns button")];
+      const letters = [...mo.querySelectorAll(".mo-word span")], track = mo.querySelector(".mo-track"), dot = track.querySelector("i"), tcEl = mo.querySelector(".mo-tc");
+      const gd = svg.querySelector(".gd"), hd = svg.querySelectorAll(".hd");
+      const IN = 1.5, HOLD = 1.3, OUT = .8, CYC = IN + HOLD + OUT, STG = .07;   // entrada, pausa, saída (s)
+      const out = bezier(.65, 0, .35, 1);
+      const st = li._mo = { on: false, t0: 0, f: bezier(.22, 1, .36, 1) };
+      // um relógio só comanda letras, agulha, timecode e o ponto do gráfico: tudo fica em sincronia
+      st.draw = t => {
+        const eo = t > IN + HOLD ? out(Math.min(1, (t - IN - HOLD) / OUT)) : 0;     // 0 -> 1 na saída
+        const p = t < IN + HOLD ? st.f(Math.min(1, t / IN)) : 1 - eo;               // progresso mostrado na agulha
+        letters.forEach((el, i) => {
+          const pl = t < IN + HOLD ? st.f(Math.max(0, Math.min(1, (t - i * STG) / (IN - 6 * STG)))) : 1;
+          el.style.transform = `translate3d(0, ${((1 - pl) * 112 - eo * 22).toFixed(2)}%, 0) rotate(${((1 - pl) * 7).toFixed(2)}deg)`;
+          el.style.opacity = (1 - eo).toFixed(2);
+        });
+        dot.style.transform = `translate3d(${((.04 + .84 * p) * track.clientWidth).toFixed(1)}px, 0, 0)`;
+        const f = Math.floor(t * 24);
+        tcEl.textContent = "00:00:" + String(Math.floor(f / 24)).padStart(2, "0") + ":" + String(f % 24).padStart(2, "0");
+        const u = Math.min(1, t / IN);
+        gd.setAttribute("cx", (u * 100).toFixed(1)); gd.setAttribute("cy", (100 - (t < IN + HOLD ? st.f(u) : 1) * 100).toFixed(1));
+        gd.style.opacity = t < IN + HOLD ? 1 : 0;
+      };
+      st.loop = now => { if (!st.on) return; st.draw(((now - st.t0) / 1000) % CYC); requestAnimationFrame(st.loop); };
       const set = i => {
         const [x1, y1, x2, y2] = MO_EASES[i].b, f = n => +n.toFixed(2);
-        mo.style.setProperty("--mo-ease", `cubic-bezier(${x1}, ${y1}, ${x2}, ${y2})`);
+        st.f = bezier(x1, y1, x2, y2); st.t0 = performance.now();
         svg.querySelector(".c").setAttribute("d", `M0 100C${f(x1 * 100)} ${f(100 - y1 * 100)} ${f(x2 * 100)} ${f(100 - y2 * 100)} 100 0`);
         svg.querySelector(".h").setAttribute("d", `M0 100L${f(x1 * 100)} ${f(100 - y1 * 100)}M100 0L${f(x2 * 100)} ${f(100 - y2 * 100)}`);
-        const cs = svg.querySelectorAll("circle"); cs[0].setAttribute("cx", f(x1 * 100)); cs[0].setAttribute("cy", f(100 - y1 * 100)); cs[1].setAttribute("cx", f(x2 * 100)); cs[1].setAttribute("cy", f(100 - y2 * 100));
+        hd[0].setAttribute("cx", f(x1 * 100)); hd[0].setAttribute("cy", f(100 - y1 * 100)); hd[1].setAttribute("cx", f(x2 * 100)); hd[1].setAttribute("cy", f(100 - y2 * 100));
         mo.querySelector(".mo-name").textContent = `cubic-bezier(${x1}, ${y1}, ${x2}, ${y2})`;
         btns.forEach((b, n) => b.setAttribute("aria-pressed", n === i));
-        mo.classList.add("re"); void mo.offsetWidth; mo.classList.remove("re");
+        if (!st.on) st.draw(IN + .2);
       };
       btns.forEach((b, i) => b.addEventListener("click", e => { e.stopPropagation(); set(i); }));
       set(2);
-    }
+    },
+    start(li) { const st = li._mo; if (!st || st.on) return; if (reduce) { st.draw(1.7); return; } st.on = true; st.t0 = performance.now(); requestAnimationFrame(st.loop); },
+    stop(li) { const st = li._mo; if (!st) return; st.on = false; st.draw(1.7); }
   }
 };
 
