@@ -281,7 +281,7 @@ footer.end .wrap { display: flex; justify-content: space-between; gap: 16px; fle
 .preview.on { clip-path: inset(0 0 0 0); }
 .preview.v { width: 190px; height: 338px; }
 /* duas camadas que se dissolvem uma na outra ao trocar de projeto */
-.pv-layer { position: absolute; inset: 0; opacity: 0; transition: opacity .38s var(--ease); }
+.pv-layer { position: absolute; inset: 0; opacity: 0; transition: opacity .75s var(--ease); }
 .pv-layer.show { opacity: 1; }
 .pv-layer video { opacity: 0; transition: opacity .3s ease; }
 .pv-layer.ready video { opacity: 1; }
@@ -937,7 +937,8 @@ const preview = (() => {
   });
   const pause = L => { try { L.vid.pause(); } catch (e) {} };
   const hide = () => { clearTimeout(hideT); hideT = null; active = null; pv.classList.remove("on"); grain.stop(); layers.forEach(pause); };
-  const hideSoon = () => { clearTimeout(hideT); hideT = setTimeout(hide, 160); };
+  const hideSoon = () => { clearTimeout(hideT); hideT = setTimeout(hide, 380); };
+  let swT = 0;   // só troca a prévia depois de o mouse parar um instante na linha
   function warm() {           // carrega todas as capas na primeira passada de mouse
     if (warmed) return; warmed = true;
     C.projetos.forEach(p => { if (p.capa) { const i = new Image(); i.src = blob(p.capa); } });
@@ -970,8 +971,11 @@ const preview = (() => {
   }
   function bind(row) {
     if (!finePointer) return;
-    row.addEventListener("pointerenter", () => { const p = C.projetos[row.dataset.i]; if (p) { warm(); showProject(p); } });
-    row.addEventListener("pointerleave", hideSoon);
+    row.addEventListener("pointerenter", () => {
+      const p = C.projetos[row.dataset.i]; if (!p) return; warm();
+      clearTimeout(swT); swT = setTimeout(() => showProject(p), pv.classList.contains("on") ? 280 : 150);
+    });
+    row.addEventListener("pointerleave", () => { clearTimeout(swT); hideSoon(); });
   }
   return {
     hide, bind,
