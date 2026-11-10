@@ -401,10 +401,10 @@ header.top { view-transition-name: site-header; }
 @property --p { syntax: "<number>"; inherits: true; initial-value: 50; }
 .svc.has-ba > div:first-child { cursor: pointer; }
 .ba-tag { font-family: var(--f-mono); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); padding: 2px 6px; margin-left: 12px; vertical-align: middle; white-space: nowrap; font-weight: 400; }
-.ba-wrap { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .75s var(--ease); }
+.ba-wrap { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 1.2s var(--ease); }
 .ba-wrap > div { overflow: hidden; min-height: 0; }
 .svc.open .ba-wrap { grid-template-rows: 1fr; }
-@media (hover: hover) { .svc.has-ba:hover .ba-wrap { grid-template-rows: 1fr; } }
+.svc.hov .ba-wrap { grid-template-rows: 1fr; }
 .dm { margin: 0 0 30px 100px; max-width: 720px; }
 /* slider antes/depois (cor e som) */
 .ba { --p: 50; position: relative; width: 100%; max-width: 440px; aspect-ratio: 4 / 5; background: #070707; overflow: hidden; user-select: none; }
@@ -418,28 +418,40 @@ header.top { view-transition-name: site-header; }
 .ba .burn.bl { bottom: 12px; left: 14px; } .ba .burn.br { bottom: 12px; right: 14px; }
 .ba input[type=range] { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; touch-action: pan-y; }
 .ba input[type=range]:focus-visible + .ba-line { outline: 1px solid var(--rec); outline-offset: 3px; }
-.svc.open .ba:not(.touched), .svc:hover .ba:not(.touched) { animation: baHint 1.6s var(--ease) .35s both; }
+.svc.open .ba:not(.touched), .svc.hov .ba:not(.touched) { animation: baHint 1.6s var(--ease) .35s both; }
 @keyframes baHint { 0% { --p: 94; } 100% { --p: 50; } }
 @media (hover: none) { .svc .ba:not(.touched) { animation-play-state: paused; } .svc.open .ba:not(.touched) { animation-play-state: running; } }
 .dm-note { margin: 12px 0 0; font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--faint); }
 
-/* Montagem: material bruto -> sequência montada, com agulha */
+/* Montagem: um take bruto contínuo, a lâmina corta em pedaços e eles viram a sequência montada */
 .mt { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 20px; align-items: start; }
 .mt-prev { width: 112px; aspect-ratio: 9 / 16; background: #070707 var(--strip) 0 0 / 1200% 100% no-repeat; background-position: calc(var(--k, 0) * 100% / 11) 0; position: relative; flex: none; }
 .mt-prev .burn { font-size: 9.5px; } .mt-prev .burn.bl { bottom: 6px; left: 8px; } .mt-prev .burn.tl { top: 6px; left: 8px; }
 .mt-body { min-width: 0; display: grid; gap: 8px; align-content: start; }
 .mt-lbl { color: var(--muted); display: flex; justify-content: space-between; gap: 10px; margin-top: 4px; }
-.mt-bin { display: flex; flex-wrap: wrap; gap: 4px; }
-.mt-bin i, .mt-clip i { display: block; width: 32px; aspect-ratio: 9 / 16; background: #070707 var(--strip) 0 0 / 1200% 100% no-repeat; background-position: calc(var(--k) * 100% / 11) 0; flex: none; }
-.mt-bin i { filter: grayscale(1) brightness(.8); opacity: .55; transition: filter .3s, opacity .3s, transform .4s var(--ease); cursor: default; }
-.mt-bin i:hover, .mt-bin i.hl { filter: none; opacity: 1; transform: translateY(-3px); }
-.mt-seq { position: relative; display: flex; gap: 2px; padding-block: 0; touch-action: pan-y; cursor: ew-resize; user-select: none; }
-.mt-clip { position: relative; display: flex; gap: 0; background: color-mix(in oklab, var(--clr) 32%, var(--bg-2)); overflow: hidden; min-width: 0; height: 57px; transition: background .25s; }
-.mt-clip:hover, .mt-clip.hl, .mt-clip.cur { background: color-mix(in oklab, var(--clr) 66%, var(--bg-2)); }
-.mt-clip i { height: 100%; width: auto; }
-.mt-clip em { position: absolute; left: 36px; right: 4px; bottom: 3px; font: normal 400 9px/1.1 var(--f-mono); letter-spacing: .04em; color: var(--fg); white-space: nowrap; overflow: hidden; text-overflow: clip; opacity: .85; }
-.mt-head { position: absolute; top: -6px; bottom: -6px; left: 0; width: 1px; background: var(--rec); pointer-events: none; z-index: 2; }
+.mt-raw { position: relative; display: flex; height: 57px; background: #0b0b0b; border-block: 6px solid #0b0b0b; }
+.mt-raw::before, .mt-raw::after { content: ""; position: absolute; left: 0; right: 0; height: 4px; background: repeating-linear-gradient(90deg, #8a8882 0 5px, transparent 5px 12px); opacity: .7; }
+.mt-raw::before { top: -5px; } .mt-raw::after { bottom: -5px; }
+.mt-raw i { --tw: calc(57px * 9 / 16); position: relative; flex: 1 1 0; min-width: 0; height: 100%; background: #0b0b0b; transition: margin .35s var(--ease), transform .6s var(--ease), opacity .5s var(--ease); }
+.mt-raw i::before { content: ""; position: absolute; inset: 0; margin: auto; width: var(--tw); background: var(--strip) 0 0 / calc(var(--tw) * 12) 100% no-repeat; background-position: calc(var(--k) * var(--tw) * -1) 0; }
+.mt-raw i.sliced { margin-right: 3px; }
+.mt-raw i.gone { transform: translateY(26px); opacity: 0; }
+.mt-razor { position: absolute; top: -12px; bottom: -12px; left: 0; width: 2px; margin-left: -1px; background: var(--rec); opacity: 0; z-index: 3; pointer-events: none; }
+.mt-razor::before { content: "✂"; position: absolute; top: -13px; left: 50%; transform: translateX(-50%) rotate(90deg); color: var(--rec); font-size: 14px; line-height: 1; }
+.mt-razor.on { opacity: 1; }
+.mt-seq { position: relative; display: flex; gap: 2px; padding-block: 0; touch-action: pan-y; cursor: ew-resize; user-select: none; min-height: 57px; background: repeating-linear-gradient(90deg, var(--line) 0 6px, transparent 6px 12px) bottom / 100% 1px no-repeat; }
+.mt-clip { position: relative; display: flex; background: color-mix(in oklab, var(--clr) 32%, var(--bg-2)); overflow: hidden; min-width: 0; height: 57px; opacity: 0; transform: translateY(-22px); transition: opacity .5s var(--ease), transform .6s var(--ease), background .25s; }
+.mt-clip.in { opacity: 1; transform: none; }
+.mt-clip:hover, .mt-clip.cur { background: color-mix(in oklab, var(--clr) 66%, var(--bg-2)); }
+.mt-clip i { display: block; height: 100%; aspect-ratio: 9 / 16; background: #070707 var(--strip) 0 0 / 1200% 100% no-repeat; background-position: calc(var(--k) * 100% / 11) 0; flex: none; }
+.mt-clip em { position: absolute; left: 36px; right: 4px; bottom: 3px; font: normal 400 9px/1.1 var(--f-mono); letter-spacing: .04em; color: var(--fg); white-space: nowrap; overflow: hidden; opacity: .85; }
+.mt-head { position: absolute; top: -6px; bottom: -6px; left: 0; width: 1px; background: var(--rec); pointer-events: none; z-index: 2; opacity: 0; }
 .mt-head::before { content: ""; position: absolute; top: 0; left: -4px; width: 9px; height: 6px; background: var(--rec); clip-path: polygon(0 0, 100% 0, 50% 100%); }
+.snd-row { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; margin-top: 12px; }
+.snd-row .dm-note { margin: 0; }
+.snd-btn { background: none; border: 1px solid var(--fg); color: var(--fg); font: 500 14px/1 var(--f-sans); padding: 10px 16px; cursor: pointer; display: inline-flex; gap: 10px; align-items: center; transition: background .25s, color .25s; }
+.snd-btn:hover, .snd-btn[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+.ba .ba-play { position: absolute; top: 0; bottom: 0; left: 0; width: 1px; background: rgba(241,239,233,.55); pointer-events: none; z-index: 1; }
 
 /* Reels: o mesmo plano cru x editado, com os cortes reais marcados na barra */
 .rl { display: grid; grid-template-columns: auto auto minmax(0, 1fr); gap: clamp(14px, 2.4vw, 28px); align-items: end; }
@@ -494,7 +506,7 @@ header.top { view-transition-name: site-header; }
   .ba.wide { aspect-ratio: 16 / 9; }
   .mt { grid-template-columns: 1fr; }
   .mt-prev { width: 96px; }
-  .mt-clip { height: 48px; } .mt-clip em { display: none; } .mt-bin i, .mt-clip i { width: 27px; }
+  .mt-raw, .mt-clip { height: 48px; } .mt-raw i { --tw: calc(48px * 9 / 16); } .mt-seq { min-height: 48px; } .mt-clip em { display: none; }
   .mo { grid-template-columns: 1fr; }
   .rl { grid-template-columns: 1fr 1fr; align-items: start; } .rl-list { grid-column: 1 / -1; } .rl-phone { width: 100%; }
 }
@@ -826,7 +838,7 @@ const txt = v => typeof v === "string" ? v : (v && v.texto) || "";
 const put = (el, v) => { el.textContent = txt(v); el.classList.toggle("ph", !!(v && v.ph)); };
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const lerp = (a, b, t) => a + (b - a) * t;
-const MEDIA = {"d3f47e9a34bf8f211cd979f08f7fe7a8": "d3f47e9a34bf8f211cd979f08f7fe7a8.jpg", "04a556e0e52ff9d01bb2394e06509333": "04a556e0e52ff9d01bb2394e06509333.jpg", "ecf18a89f9bbef85f5bea03ee5c089bb": "ecf18a89f9bbef85f5bea03ee5c089bb.jpg", "1074c4cd58b65efa146efe8f3f9124d6": "1074c4cd58b65efa146efe8f3f9124d6.jpg", "bcb02679b9024fbf0bfe4efb795ef776": "bcb02679b9024fbf0bfe4efb795ef776.jpg", "169e089838c84c97e050ae377cb24bff": "169e089838c84c97e050ae377cb24bff.jpg", "62ca7760b26f17e27be805e58a3f22ab": "62ca7760b26f17e27be805e58a3f22ab.mp4", "singular-cast-1080p": "singular-cast-1080p.mp4", "0f67741b78c1367293d5cb7700c17254": "0f67741b78c1367293d5cb7700c17254.mp4", "188381caa18ed300e06bb34976de81cb": "188381caa18ed300e06bb34976de81cb.jpg", "5b9d4dce557aae3ffef5ad902ea94c41": "5b9d4dce557aae3ffef5ad902ea94c41.mp4", "e05694cefa745fab6f1b9cb70f83f5c7": "e05694cefa745fab6f1b9cb70f83f5c7.jpg", "bb8a5831ff66c8bf51fe340bfe59ac9d": "bb8a5831ff66c8bf51fe340bfe59ac9d.mp4", "4d5aa3a513cec9aca4d25ae57871bcfd": "4d5aa3a513cec9aca4d25ae57871bcfd.jpg", "234ecb7d3e1ef7f54f1645dcdf2c6d8e": "234ecb7d3e1ef7f54f1645dcdf2c6d8e.mp4", "cg-antes": "cg-antes.jpg", "sv-strip": "sv-strip.jpg", "cg-depois": "cg-depois.jpg", "prev-0f67741b": "prev-0f67741b.mp4", "prev-234ecb7d": "prev-234ecb7d.mp4", "prev-5b9d4dce": "prev-5b9d4dce.mp4", "prev-62ca7760": "prev-62ca7760.mp4", "prev-bb8a5831": "prev-bb8a5831.mp4", "prev-singular": "prev-singular.mp4"};
+const MEDIA = {"d3f47e9a34bf8f211cd979f08f7fe7a8": "d3f47e9a34bf8f211cd979f08f7fe7a8.jpg", "04a556e0e52ff9d01bb2394e06509333": "04a556e0e52ff9d01bb2394e06509333.jpg", "ecf18a89f9bbef85f5bea03ee5c089bb": "ecf18a89f9bbef85f5bea03ee5c089bb.jpg", "1074c4cd58b65efa146efe8f3f9124d6": "1074c4cd58b65efa146efe8f3f9124d6.jpg", "bcb02679b9024fbf0bfe4efb795ef776": "bcb02679b9024fbf0bfe4efb795ef776.jpg", "169e089838c84c97e050ae377cb24bff": "169e089838c84c97e050ae377cb24bff.jpg", "62ca7760b26f17e27be805e58a3f22ab": "62ca7760b26f17e27be805e58a3f22ab.mp4", "singular-cast-1080p": "singular-cast-1080p.mp4", "0f67741b78c1367293d5cb7700c17254": "0f67741b78c1367293d5cb7700c17254.mp4", "188381caa18ed300e06bb34976de81cb": "188381caa18ed300e06bb34976de81cb.jpg", "5b9d4dce557aae3ffef5ad902ea94c41": "5b9d4dce557aae3ffef5ad902ea94c41.mp4", "e05694cefa745fab6f1b9cb70f83f5c7": "e05694cefa745fab6f1b9cb70f83f5c7.jpg", "bb8a5831ff66c8bf51fe340bfe59ac9d": "bb8a5831ff66c8bf51fe340bfe59ac9d.mp4", "4d5aa3a513cec9aca4d25ae57871bcfd": "4d5aa3a513cec9aca4d25ae57871bcfd.jpg", "234ecb7d3e1ef7f54f1645dcdf2c6d8e": "234ecb7d3e1ef7f54f1645dcdf2c6d8e.mp4", "cg-antes": "cg-antes.jpg", "sv-strip": "sv-strip.jpg", "som-antes": "som-antes.mp3", "som-depois": "som-depois.mp3", "cg-depois": "cg-depois.jpg", "prev-0f67741b": "prev-0f67741b.mp4", "prev-234ecb7d": "prev-234ecb7d.mp4", "prev-5b9d4dce": "prev-5b9d4dce.mp4", "prev-62ca7760": "prev-62ca7760.mp4", "prev-bb8a5831": "prev-bb8a5831.mp4", "prev-singular": "prev-singular.mp4"};
 const blob = id => id && MEDIA[id] ? "media/" + MEDIA[id] : "";
 // prévia leve (480px, 8 s, sem áudio) usada na lista; o vídeo completo só carrega na página do projeto
 const prevBlob = id => { const k = "prev-" + String(id || "").slice(0, 8); return MEDIA[k] ? "media/" + MEDIA[k] : blob(id); };
@@ -988,11 +1000,10 @@ function setImg(holder, imgEl, id) {
   else { imgEl.hidden = true; imgEl.removeAttribute("src"); holder.classList.remove("has-img"); }
 }
 // ---------- Demonstrações dos serviços ----------
-const DEMO_IDS = {antes:"cg-antes",depois:"cg-depois",strip:"sv-strip"};
+const DEMO_IDS = {antes:"cg-antes",depois:"cg-depois",strip:"sv-strip",somA:"som-antes",somD:"som-depois"};
 const demoKind = s => s.demo || (/montagem|narrativa/i.test(s.nome) ? "montagem" : /color|cor\b/i.test(s.nome) ? "cor" : /reels|shorts|tiktok/i.test(s.nome) ? "reels" : /motion/i.test(s.nome) ? "motion" : /\bsom\b|mixagem/i.test(s.nome) ? "som" : "");
 const demoSrc = id => (typeof prevBlob === "function" ? prevBlob(id) : blob(id));
 const MT_DUR = [2.4, 1.6, 2.2, 1.8, 2.6, 2.0, 2.4, 2.2, 2.8, 2.2, 3.0, 3.8];
-const MT_BIN = [7, 2, 10, 0, 5, 11, 3, 8, 1, 9, 4, 6];
 const MT_CLR = ["--c1", "--c2", "--c3", "--c4", "--c5"];
 const MO_EASES = [
   { n: "Linear", b: [0, 0, 1, 1] },
@@ -1000,6 +1011,7 @@ const MO_EASES = [
   { n: "Forte", b: [.22, 1, .36, 1] },
   { n: "Elástico", b: [.34, 1.56, .64, 1] },
 ];
+const SND = {"a":[0.62,0.65,0.65,0.64,0.63,0.53,0.57,0.53,0.61,0.47,0.43,0.46,0.54,0.58,0.49,0.62,0.51,0.47,0.54,0.62,0.57,0.49,0.45,0.48,0.56,0.63,0.47,0.43,0.54,0.55,0.6,0.53,0.54,0.62,0.53,0.49,0.56,0.52,0.53,0.47,0.43,0.54,0.49,0.61,0.58,0.55,0.58,0.59,0.49,0.58,0.55,0.58,0.51,0.58,0.53,0.51,0.48,0.43,0.45,0.54,0.65,0.66,0.57,0.61,0.49,0.52,0.6,0.52,0.65,0.66,0.66,0.66,0.66,0.67,0.68,0.68,0.68,0.67,0.67,0.68,0.69,0.67,0.68,0.68,0.67,0.67,0.66,0.53,0.43,0.43,0.43,0.47,0.45,0.4,0.43,0.38],"d":[0.85,0.88,0.85,0.87,0.88,0.85,0.89,0.85,0.87,0.68,0.49,0.71,0.81,0.87,0.79,0.84,0.82,0.79,0.83,0.85,0.81,0.78,0.76,0.81,0.88,0.91,0.73,0.6,0.84,0.77,0.84,0.84,0.87,0.89,0.85,0.79,0.83,0.82,0.81,0.72,0.61,0.84,0.79,0.89,0.86,0.81,0.84,0.86,0.73,0.88,0.83,0.88,0.79,0.85,0.84,0.85,0.8,0.5,0.75,0.86,0.9,0.91,0.84,0.84,0.82,0.8,0.85,0.84,0.91,0.92,0.91,0.92,0.92,0.91,0.9,0.9,0.89,0.86,0.86,0.84,0.91,0.81,0.77,0.81,0.86,0.85,0.87,0.62,0.55,0.48,0.47,0.8,0.73,0.53,0.75,0.6],"c":[1,2,3,4,8,13,15,18,19,20,25,28,29,30,33,36,38,43,44,45,46,47,49,51,53,59,60,61,62,63,65,66,68,69,74,75,76,78,79,80,81,84,85,86,94,95]};
 const RL_LIM = 8, RL_CUTS = [2.8, 4.17, 5.17, 6.5];   // cortes reais do Fashion Film nos primeiros 8 s
 
 function demoHTML(kind, s) {
@@ -1008,13 +1020,13 @@ function demoHTML(kind, s) {
     return `<div class="ba"><img src="${d}" alt="Depois da correção de cor" loading="lazy"><img class="ba-a" src="${a}" alt="Antes da correção de cor" loading="lazy"><span class="burn l">ANTES</span><span class="burn r">DEPOIS</span><input type="range" min="0" max="100" value="50" aria-label="Comparar antes e depois"><span class="ba-line"></span></div>`;
   }
   if (kind === "som") {
-    return `<div class="ba wide" data-snd><canvas class="ba-d" aria-hidden="true"></canvas><canvas class="ba-a" aria-hidden="true"></canvas><span class="burn l">ANTES · BRUTO</span><span class="burn r">DEPOIS · MIXADO</span><span class="burn bl">−31 LUFS · ruído e picos</span><span class="burn br">−14 LUFS · limpo</span><input type="range" min="0" max="100" value="50" aria-label="Comparar áudio antes e depois"><span class="ba-line"></span></div><p class="dm-note">Ilustração: voz bruta com ruído e picos × voz tratada e nivelada</p>`;
+    return `<div class="ba wide" data-snd><canvas class="ba-d" aria-hidden="true"></canvas><canvas class="ba-a" aria-hidden="true"></canvas><span class="ba-play"></span><span class="burn l">ANTES · BRUTO</span><span class="burn r">DEPOIS · MIXADO</span><span class="burn bl">−29 LUFS · chiado e picos cortados</span><span class="burn br">−15 LUFS · limpo</span><input type="range" min="0" max="100" value="50" aria-label="Misturar áudio antes e depois"><span class="ba-line"></span></div><div class="snd-row"><button type="button" class="snd-btn" aria-pressed="false">▶ Ouvir</button><p class="dm-note">Áudio real do vídeo "Motion feito 100% com IA". Arraste a linha: esquerda = antes, direita = depois</p></div><audio preload="none" data-k="a" src="${blob(DEMO_IDS.somA)}"></audio><audio preload="none" data-k="d" src="${blob(DEMO_IDS.somD)}"></audio>`;
   }
   if (kind === "montagem") {
     const tot = MT_DUR.reduce((a, b) => a + b, 0);
-    const bin = MT_BIN.map(k => `<i data-k="${k}" style="--k:${k}"></i>`).join("");
+    const raw = MT_DUR.map((d, k) => `<i style="--k:${k}"></i>`).join("");
     const seq = MT_DUR.map((d, k) => `<span class="mt-clip" data-k="${k}" style="flex:${d} 1 0;--clr:var(${MT_CLR[k % 5]})"><i style="--k:${k}"></i><em>A001_C${String(k + 1).padStart(3, "0")}</em></span>`).join("");
-    return `<div class="mt" style="--strip:url('${blob(DEMO_IDS.strip)}')"><div class="mt-prev" style="--k:0"><span class="burn tl"><span class="rec"></span>PGM</span><span class="burn bl mt-tc">00:00:00:00</span></div><div class="mt-body"><div class="mt-lbl mono"><span>Material bruto</span><span>${MT_BIN.length} clipes</span></div><div class="mt-bin">${bin}</div><div class="mt-lbl mono"><span>Montagem</span><span>${tot.toFixed(0)} s</span></div><div class="mt-seq" aria-label="Sequência montada. Arraste para percorrer.">${seq}<span class="mt-head"></span></div></div></div><p class="dm-note">Arraste na sequência para percorrer · passe o mouse nos clipes do bruto</p>`;
+    return `<div class="mt" style="--strip:url('${blob(DEMO_IDS.strip)}')"><div class="mt-prev" style="--k:0"><span class="burn tl"><span class="rec"></span>PGM</span><span class="burn bl mt-tc">00:00:00:00</span></div><div class="mt-body"><div class="mt-lbl mono"><span>Take bruto · A001_C001</span><span>1 clipe contínuo</span></div><div class="mt-raw" aria-hidden="true">${raw}<span class="mt-razor"></span></div><div class="mt-lbl mono"><span>Montagem</span><span>${MT_DUR.length} cortes · ${tot.toFixed(0)} s</span></div><div class="mt-seq" aria-label="Sequência montada. Arraste para percorrer.">${seq}<span class="mt-head"></span></div></div></div><p class="dm-note">O take bruto é cortado e vira a sequência · depois arraste na sequência para percorrer</p>`;
   }
   if (kind === "reels") {
     const pj = (C.projetos || []).find(p => p.formato === "9:16" && p.video) || (C.projetos || []).find(p => p.video) || {};
@@ -1043,39 +1055,43 @@ const DEMOS = {
   som: {
     init(li) {
       const box = li.querySelector(".ba"); if (!box) return;
+      const rec = getComputedStyle(document.documentElement).getPropertyValue("--rec").trim() || "#e5484d";
       const draw = () => {
         const w = box.clientWidth, h = box.clientHeight; if (!w || !h) return;
         const dpr = Math.min(devicePixelRatio || 1, 2);
-        const rec = getComputedStyle(document.documentElement).getPropertyValue("--rec").trim() || "#e5484d";
-        const N = Math.max(40, Math.floor(w / 6));
-        let a = 7; const rnd = () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
-        const raw = [], mix = []; let i = 0;
-        while (i < N) {
-          const len = 8 + Math.floor(rnd() * 14), speech = rnd() > .28;
-          for (let k = 0; k < len && i < N; k++, i++) {
-            const syl = .55 + .45 * Math.abs(Math.sin(k * .9 + rnd()));
-            if (speech) { const e = .16 + .5 * syl * (.5 + rnd() * .5); raw.push(rnd() > .93 ? Math.min(1, e + .55 + rnd() * .3) : e); mix.push(Math.min(.92, .52 + .34 * e / .66)); }
-            else { raw.push(.05 + rnd() * .05); mix.push(.012); }
-          }
-        }
         const paint = (cv, vals, clip) => {
           cv.width = w * dpr; cv.height = h * dpr; const c = cv.getContext("2d"); c.scale(dpr, dpr);
           c.fillStyle = "#070707"; c.fillRect(0, 0, w, h);
           const bw = w / vals.length, mid = h / 2;
           c.fillStyle = "rgba(241,239,233,.12)"; c.fillRect(0, mid - .5, w, 1);
-          vals.forEach((v, n) => { const bh = Math.max(1.5, v * h * .8); c.fillStyle = clip && v > .9 ? rec : "#f1efe9"; c.fillRect(n * bw + 1, mid - bh / 2, Math.max(1, bw - 2), bh); });
+          vals.forEach((v, n) => { const bh = Math.max(1.5, v * h * .8); c.fillStyle = clip && SND.c.includes(n) ? rec : "#f1efe9"; c.fillRect(n * bw + 1, mid - bh / 2, Math.max(1, bw - 2), bh); });
         };
-        paint(box.querySelector(".ba-d"), mix, false); paint(box.querySelector(".ba-a"), raw, true);
+        paint(box.querySelector(".ba-d"), SND.d, false); paint(box.querySelector(".ba-a"), SND.a, true);
       };
       draw(); if (window.ResizeObserver) new ResizeObserver(draw).observe(box);
-    }
+      const aa = li.querySelector('audio[data-k="a"]'), ad = li.querySelector('audio[data-k="d"]'), btn = li.querySelector(".snd-btn"), play = box.querySelector(".ba-play"), range = box.querySelector("input[type=range]");
+      const st = li._snd = { playing: false, raf: 0 };
+      const MASTER = .6;
+      st.mix = () => { const p = (+range.value) / 100; aa.volume = MASTER * Math.sqrt(p); ad.volume = MASTER * Math.sqrt(1 - p); };
+      st.tick = () => { play.style.left = (ad.currentTime / (ad.duration || 12) * 100) + "%"; if (st.playing) st.raf = requestAnimationFrame(st.tick); };
+      st.stop = () => { st.playing = false; cancelAnimationFrame(st.raf); aa.pause(); ad.pause(); btn.setAttribute("aria-pressed", "false"); btn.textContent = "▶ Ouvir"; };
+      st.play = () => {
+        st.mix(); aa.currentTime = ad.currentTime = 0;
+        Promise.all([aa.play(), ad.play()]).then(() => { st.playing = true; btn.setAttribute("aria-pressed", "true"); btn.textContent = "❚❚ Pausar"; st.tick(); }).catch(() => st.stop());
+      };
+      btn.addEventListener("click", e => { e.stopPropagation(); st.playing ? st.stop() : st.play(); });
+      range.addEventListener("input", st.mix);
+      ad.addEventListener("ended", st.stop);
+    },
+    stop(li) { if (li._snd) li._snd.stop(); }
   },
   montagem: {
     init(li) {
-      const seq = li.querySelector(".mt-seq"), prev = li.querySelector(".mt-prev"), tc = li.querySelector(".mt-tc"), head = li.querySelector(".mt-head");
-      const tot = MT_DUR.reduce((a, b) => a + b, 0), st = li._mt = { t: 0, on: false, drag: false, last: 0 };
-      const clips = [...seq.querySelectorAll(".mt-clip")], bin = [...li.querySelectorAll(".mt-bin i")];
+      const seq = li.querySelector(".mt-seq"), prev = li.querySelector(".mt-prev"), tc = li.querySelector(".mt-tc"), head = li.querySelector(".mt-head"), razor = li.querySelector(".mt-razor");
+      const pcs = [...li.querySelectorAll(".mt-raw i")], clips = [...seq.querySelectorAll(".mt-clip")];
+      const tot = MT_DUR.reduce((a, b) => a + b, 0), st = li._mt = { t: 0, on: false, drag: false, last: 0, built: false, timers: [] };
       let cur = -1;
+      const later = (f, ms) => st.timers.push(setTimeout(f, ms));
       const at = t => { let a = 0; for (let k = 0; k < MT_DUR.length; k++) { a += MT_DUR[k]; if (t < a) return k; } return MT_DUR.length - 1; };
       st.set = t => {
         st.t = (t % tot + tot) % tot; const k = at(st.t);
@@ -1084,16 +1100,32 @@ const DEMOS = {
         const f = Math.floor(st.t * 24), s = Math.floor(f / 24);
         tc.textContent = "00:00:" + String(s).padStart(2, "0") + ":" + String(f % 24).padStart(2, "0");
       };
-      st.loop = now => { if (!st.on) return; const dt = Math.min(.1, (now - st.last) / 1000); st.last = now; if (!st.drag) st.set(st.t + dt * 4); requestAnimationFrame(st.loop); };
+      st.reset = () => {
+        st.timers.forEach(clearTimeout); st.timers = []; st.built = false; st.drag = false;
+        pcs.forEach(p => p.className = ""); clips.forEach(c => c.classList.remove("in", "cur"));
+        razor.classList.remove("on"); razor.style.transition = "none"; razor.style.left = "0%"; head.style.opacity = 0; cur = -1; st.set(0);
+      };
+      st.build = () => {
+        st.reset(); void razor.offsetWidth;
+        razor.classList.add("on"); razor.style.transition = "left 1.8s linear"; razor.style.left = "100%";
+        pcs.forEach((p, k) => later(() => p.classList.add("sliced"), (k + 1) / pcs.length * 1800));
+        pcs.forEach((p, k) => later(() => { p.classList.add("gone"); clips[k].classList.add("in"); }, 2300 + k * 110));
+        later(() => { razor.classList.remove("on"); head.style.opacity = 1; st.built = true; st.last = performance.now(); st.set(0); }, 2300 + pcs.length * 110 + 600);
+      };
+      st.loop = now => {
+        if (!st.on) return;
+        const dt = Math.min(.1, (now - st.last) / 1000); st.last = now;
+        if (st.built && !st.drag) { const n = st.t + dt * 4; if (n >= tot) { st.built = false; head.style.opacity = 0; later(() => { if (st.on) st.build(); }, 1400); } else st.set(n); }
+        requestAnimationFrame(st.loop);
+      };
       const pos = e => { const r = seq.getBoundingClientRect(); return Math.max(0, Math.min(.999, (e.clientX - r.left) / r.width)) * tot; };
-      seq.addEventListener("pointerdown", e => { st.drag = true; seq.setPointerCapture(e.pointerId); st.set(pos(e)); });
+      seq.addEventListener("pointerdown", e => { if (!st.built) return; st.drag = true; seq.setPointerCapture(e.pointerId); st.set(pos(e)); });
       seq.addEventListener("pointermove", e => { if (st.drag) st.set(pos(e)); });
-      const up = () => { st.drag = false; }; seq.addEventListener("pointerup", up); seq.addEventListener("pointercancel", up);
-      bin.forEach(b => { b.addEventListener("mouseenter", () => clips[+b.dataset.k].classList.add("hl")); b.addEventListener("mouseleave", () => clips[+b.dataset.k].classList.remove("hl")); });
-      st.set(0);
+      const up = () => { st.drag = false; st.last = performance.now(); }; seq.addEventListener("pointerup", up); seq.addEventListener("pointercancel", up);
+      st.reset();
     },
-    start(li) { const st = li._mt; if (!st || st.on) return; st.on = true; st.last = performance.now(); requestAnimationFrame(st.loop); },
-    stop(li) { const st = li._mt; if (st) st.on = false; }
+    start(li) { const st = li._mt; if (!st || st.on) return; st.on = true; st.build(); requestAnimationFrame(st.loop); },
+    stop(li) { const st = li._mt; if (!st) return; st.on = false; st.reset(); }
   },
   reels: {
     init(li) {
@@ -1140,6 +1172,7 @@ const DEMOS = {
 (() => {
   const root = document.getElementById("services");
   if (!root || root.dataset.dm) return; root.dataset.dm = "1";
+  const canHover = () => matchMedia("(hover: hover)").matches;
   const isOpen = li => li.classList.contains("open") || !!li._hov;
   const sync = li => {
     const d = DEMOS[li.dataset.demo]; if (!d) return;
@@ -1147,15 +1180,29 @@ const DEMOS = {
     const open = isOpen(li); if (open === !!li._was) return; li._was = open;
     if (open) { if (d.start) d.start(li); } else if (d.stop) d.stop(li);
   };
-  root.addEventListener("mouseover", e => { const li = e.target.closest(".svc.has-ba"); if (li && !li._hov) { li._hov = true; sync(li); } });
-  root.addEventListener("mouseout", e => { const li = e.target.closest(".svc.has-ba"); if (li && !li.contains(e.relatedTarget)) { li._hov = false; sync(li); } });
+  const closeOthers = keep => root.querySelectorAll(".svc.has-ba").forEach(o => {
+    if (o === keep) return; clearTimeout(o._tIn); o._tIn = 0; o._hov = false; o.classList.remove("hov", "open"); sync(o);
+  });
+  // passar o mouse: só abre depois de uma pausa (260 ms) e fecha com atraso (380 ms), um item por vez
+  root.addEventListener("mouseover", e => {
+    if (!canHover()) return; const li = e.target.closest(".svc.has-ba"); if (!li) return;
+    clearTimeout(li._tOut); if (li._hov || li._tIn) return;
+    li._tIn = setTimeout(() => { li._tIn = 0; closeOthers(li); li._hov = true; li.classList.add("hov"); sync(li); }, 260);
+  });
+  root.addEventListener("mouseout", e => {
+    if (!canHover()) return; const li = e.target.closest(".svc.has-ba"); if (!li || li.contains(e.relatedTarget)) return;
+    clearTimeout(li._tIn); li._tIn = 0;
+    if (li._hov) { clearTimeout(li._tOut); li._tOut = setTimeout(() => { li._hov = false; li.classList.remove("hov"); sync(li); }, 380); }
+  });
   root.addEventListener("input", e => {
     const r = e.target.closest && e.target.closest(".ba input[type=range]"); if (!r) return;
     const ba = r.closest(".ba"); ba.classList.add("touched"); ba.style.setProperty("--p", r.value);
   });
   root.addEventListener("click", e => {
     if (e.target.closest(".dm")) return;
-    const li = e.target.closest(".svc.has-ba"); if (li) { li.classList.toggle("open"); sync(li); }
+    const li = e.target.closest(".svc.has-ba"); if (!li) return;
+    const was = li.classList.contains("open"); closeOthers(li);
+    li.classList.toggle("open", !was); if (was) { li._hov = false; li.classList.remove("hov"); } sync(li);
   });
 })();
 
