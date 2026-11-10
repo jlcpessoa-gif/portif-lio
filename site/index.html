@@ -204,7 +204,9 @@ section.block { padding-block: clamp(72px, 10vw, 140px); border-top: 1px solid v
 /* Faixa de ferramentas com velocidade */
 .velo { overflow: hidden; border-top: 1px solid var(--line); padding-block: clamp(22px, 3vw, 36px); }
 .velo-track { display: flex; width: max-content; will-change: transform; }
-.velo-track span { font-size: clamp(40px, 7vw, 104px); font-weight: 500; letter-spacing: -.045em; line-height: 1; padding-right: .5em; white-space: nowrap; }
+.velo-track span { font-size: clamp(40px, 7vw, 104px); font-weight: 500; letter-spacing: -.045em; line-height: 1; padding-right: .5em; white-space: nowrap; opacity: .28; transition: opacity .7s var(--ease); }
+.velo-track span.on { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .velo-track span { opacity: 1; } }
 .velo-track span i { font-style: italic; font-weight: 400; color: var(--faint); padding-right: .5em; }
 
 /* Índice de projetos */
@@ -1435,7 +1437,10 @@ function armReveal(view) {
 
 /* ---------- Loop principal ---------- */
 let viewName = "", smoothY = scrollY, lastY = scrollY, vel = 0, veloX = 0;
+let veloT = 0, veloV = .6, veloHover = 1, veloOver = false, veloN = 0, veloOn = null;   // faixa de ferramentas: velocidade com inércia
 const velo = $("#velo"), scrub = $("#scrub"), parEls = $$("[data-par]");
+velo.parentElement.addEventListener("pointerenter", () => { veloOver = true; });
+velo.parentElement.addEventListener("pointerleave", () => { veloOver = false; });
 function sceneProgress() {
   if (viewName !== "inicio") {
     const max = document.documentElement.scrollHeight - innerHeight;
@@ -1473,10 +1478,21 @@ function frame(now) {
     const lit = Math.round(clamp((innerHeight * .82 - r.top) / (r.height + innerHeight * .25)) * scrubWords.length);
     scrubWords.forEach((w, i) => { w.classList.toggle("lit", reduce || i < lit); w.classList.toggle("now", !reduce && i === lit - 1 && lit < scrubWords.length); });
     if (!reduce) {
-      veloX -= TUNE.faixa.velocidade + Math.abs(vel) * TUNE.faixa.reacao;
+      // base calma; a rolagem dá um empurrão suave e limitado (subir a página desacelera e inverte); mouse em cima segura a faixa
+      const dtf = clamp((now - (veloT || now)) / 16.67, .2, 3); veloT = now;
+      const base = TUNE.faixa.velocidade * .6;
+      const push = clamp(vel * TUNE.faixa.reacao * .3, -7, 7);
+      veloHover = lerp(veloHover, veloOver ? .25 : 1, .06);
+      veloV = lerp(veloV, base * veloHover + push, .045);
+      veloX -= veloV * dtf;
       const third = velo.scrollWidth / 3;
-      if (third && -veloX > third) veloX += third;
-      velo.style.transform = `translate3d(${veloX}px, 0, 0) skewX(${clamp(-vel * TUNE.faixa.inclinacao, -10, 10)}deg)`;
+      if (third) { while (-veloX > third) veloX += third; while (veloX > 0) veloX -= third; }
+      velo.style.transform = `translate3d(${veloX}px, 0, 0) skewX(${clamp(-(veloV - base) * TUNE.faixa.inclinacao * 1.5, -8, 8)}deg)`;
+      if (++veloN % 6 === 0) {   // a ferramenta que passa pelo centro da tela acende
+        let best = null, bd = 1e9;
+        for (const el of velo.children) { const r = el.getBoundingClientRect(), d = Math.abs(r.left + r.width / 2 - innerWidth / 2); if (d < bd) { bd = d; best = el; } }
+        if (best && best !== veloOn) { if (veloOn) veloOn.classList.remove("on"); veloOn = best; best.classList.add("on"); }
+      }
     }
     $("#pt-tc").textContent = tc(now / 1000 * FPS);
   }
