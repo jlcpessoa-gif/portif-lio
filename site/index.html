@@ -441,28 +441,28 @@ header.top { view-transition-name: site-header; }
 .mt-head { position: absolute; top: -6px; bottom: -6px; left: 0; width: 1px; background: var(--rec); pointer-events: none; z-index: 2; }
 .mt-head::before { content: ""; position: absolute; top: 0; left: -4px; width: 9px; height: 6px; background: var(--rec); clip-path: polygon(0 0, 100% 0, 50% 100%); }
 
-/* Reels: celular com legendas, punch-in e barra de progresso ligáveis */
-.rl { display: flex; gap: clamp(18px, 3vw, 36px); align-items: flex-end; flex-wrap: wrap; }
-.rl-phone { position: relative; width: 190px; aspect-ratio: 9 / 16; background: #070707 center / cover no-repeat; overflow: hidden; border-radius: 22px; border: 3px solid #1c1c1b; flex: none; isolation: isolate; }
+/* Reels: o mesmo plano cru x editado, com os cortes reais marcados na barra */
+.rl { display: grid; grid-template-columns: auto auto minmax(0, 1fr); gap: clamp(14px, 2.4vw, 28px); align-items: end; }
+.rl-ph { margin: 0; display: grid; gap: 10px; justify-items: center; }
+.rl-ph figcaption { color: var(--muted); }
+.rl-ph.ed figcaption { color: var(--fg); }
+.rl-phone { position: relative; width: clamp(150px, 19vw, 200px); aspect-ratio: 9 / 16; background: #070707 center / cover no-repeat; overflow: hidden; border-radius: 22px; border: 3px solid #1c1c1b; isolation: isolate; }
 .rl-phone video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
-.rl-phone.punch video { animation: rlPunch 3.2s steps(1) infinite; }
-@keyframes rlPunch { 0% { transform: scale(1); } 38% { transform: scale(1.22); } 72% { transform: scale(1); } }
-.rl-cap { position: absolute; left: 8px; right: 8px; top: 14%; z-index: 3; text-align: center; font: 800 17px/1.15 var(--f-sans); letter-spacing: -.01em; text-transform: uppercase; color: #fff; text-shadow: 0 2px 6px rgba(0,0,0,.9); pointer-events: none; min-height: 2.4em; display: flex; flex-wrap: wrap; gap: 0 .3em; justify-content: center; align-content: start; }
-.rl-phone:not(.cap) .rl-cap { display: none; }
-.rl-cap span { display: inline-block; padding: 0 .12em; transition: transform .18s var(--ease), background .18s; }
-.rl-cap span.on { background: var(--rec); transform: scale(1.12) rotate(-1.5deg); text-shadow: none; }
-.rl-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 4px; z-index: 4; background: rgba(255,255,255,.22); display: none; }
-.rl-phone.bar .rl-bar { display: block; }
-.rl-bar i { display: block; height: 100%; width: 0; background: var(--rec); animation: rlBar 8s linear infinite; }
-@keyframes rlBar { to { width: 100%; } }
+.rl-ph.raw video { filter: grayscale(.55) contrast(.62) brightness(1.18) saturate(.7); }
 .rl-phone .burn { z-index: 4; font-size: 9px; top: 10px; left: 12px; display: flex; gap: 5px; align-items: center; }
-.rl-opts { display: grid; gap: 8px; justify-items: start; padding-bottom: 6px; }
-.rl-opts .lbl { color: var(--muted); margin-bottom: 2px; }
-.rl-opts button, .mo-btns button { background: none; border: 1px solid var(--line); color: var(--muted); font: 400 14px/1 var(--f-sans); padding: 10px 14px; cursor: pointer; display: inline-flex; gap: 10px; align-items: center; transition: color .2s, border-color .2s, background .2s; }
-.rl-opts button::before { content: ""; width: 8px; height: 8px; border: 1px solid currentColor; border-radius: 50%; }
-.rl-opts button[aria-pressed="true"] { color: var(--fg); border-color: var(--fg); }
-.rl-opts button[aria-pressed="true"]::before { background: var(--rec); border-color: var(--rec); }
-.rl-opts button:hover, .mo-btns button:hover { color: var(--fg); border-color: var(--fg); }
+.rl-phone .burn.br { top: auto; left: auto; bottom: 14px; right: 12px; }
+.rl-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 5px; z-index: 4; background: rgba(255,255,255,.22); }
+.rl-bar i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--rec); }
+.rl-bar b { position: absolute; top: -3px; bottom: 0; width: 2px; margin-left: -1px; background: #f1efe9; }
+.rl-cut { position: absolute; left: 0; right: 0; top: 28px; z-index: 4; text-align: center; font: 500 11px/1 var(--f-mono); letter-spacing: .08em; color: #f1efe9; }
+.rl-cut span { display: inline-block; padding: 4px 7px; background: rgba(0,0,0,.55); }
+.rl-cut.pop span { animation: rlPop .35s var(--ease); }
+@keyframes rlPop { from { background: var(--rec); transform: scale(1.15); } }
+.rl-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); align-self: center; min-width: 0; }
+.rl-list li { padding: 12px 0; border-bottom: 1px solid var(--line); display: grid; gap: 3px; font-size: 15px; }
+.rl-list .k { color: var(--muted); }
+.rl-list .x { color: var(--muted); text-decoration: line-through; text-decoration-thickness: 1px; }
+.rl-list .ok { color: var(--fg); }
 
 /* Motion: curva de animação ao vivo */
 .mo { --mo-ease: cubic-bezier(.22, 1, .36, 1); display: grid; grid-template-columns: minmax(0, 1fr) 200px; gap: 16px; align-items: stretch; }
@@ -476,12 +476,14 @@ header.top { view-transition-name: site-header; }
 @keyframes moDot { 0% { left: 0; } 40% { left: calc(100% - 14px); } 66% { left: calc(100% - 14px); } 100% { left: 0; } }
 .mo.re .mo-word span, .mo.re .mo-track i { animation: none; }
 .mo-side { display: grid; gap: 10px; align-content: start; }
-.mo-curve { width: min(100%, 200px); height: auto; display: block; background: var(--bg-2); border: 1px solid var(--line); }
+.mo-curve { width: 100%; height: auto; display: block; background: var(--bg-2); border: 1px solid var(--line); }
 .mo-curve .g { stroke: var(--line); stroke-width: 1; fill: none; }
 .mo-curve .h { stroke: var(--faint); stroke-width: 1; fill: none; }
 .mo-curve .c { stroke: var(--fg); stroke-width: 2.5; fill: none; }
 .mo-curve circle { fill: var(--rec); }
 .mo-btns { display: flex; flex-wrap: wrap; gap: 6px; }
+.mo-btns button { background: none; border: 1px solid var(--line); color: var(--muted); font: 400 14px/1 var(--f-sans); cursor: pointer; transition: color .2s, border-color .2s, background .2s; }
+.mo-btns button:hover { color: var(--fg); border-color: var(--fg); }
 .mo-btns button { padding: 8px 10px; font-size: 13px; }
 .mo-btns button[aria-pressed="true"] { color: var(--bg); background: var(--fg); border-color: var(--fg); }
 .mo-name { color: var(--muted); font-size: 10px; overflow-wrap: anywhere; }
@@ -494,7 +496,7 @@ header.top { view-transition-name: site-header; }
   .mt-prev { width: 96px; }
   .mt-clip { height: 48px; } .mt-clip em { display: none; } .mt-bin i, .mt-clip i { width: 27px; }
   .mo { grid-template-columns: 1fr; }
-  .rl-phone { width: 170px; }
+  .rl { grid-template-columns: 1fr 1fr; align-items: start; } .rl-list { grid-column: 1 / -1; } .rl-phone { width: 100%; }
 }
 
 /* descrições mantêm parágrafos e tópicos */
@@ -998,7 +1000,7 @@ const MO_EASES = [
   { n: "Forte", b: [.22, 1, .36, 1] },
   { n: "Elástico", b: [.34, 1.56, .64, 1] },
 ];
-const RL_WORDS = ["O", "gancho", "nos", "primeiros", "segundos", "decide", "tudo"];
+const RL_LIM = 8, RL_CUTS = [2.8, 4.17, 5.17, 6.5];   // cortes reais do Fashion Film nos primeiros 8 s
 
 function demoHTML(kind, s) {
   if (kind === "cor") {
@@ -1015,9 +1017,11 @@ function demoHTML(kind, s) {
     return `<div class="mt" style="--strip:url('${blob(DEMO_IDS.strip)}')"><div class="mt-prev" style="--k:0"><span class="burn tl"><span class="rec"></span>PGM</span><span class="burn bl mt-tc">00:00:00:00</span></div><div class="mt-body"><div class="mt-lbl mono"><span>Material bruto</span><span>${MT_BIN.length} clipes</span></div><div class="mt-bin">${bin}</div><div class="mt-lbl mono"><span>Montagem</span><span>${tot.toFixed(0)} s</span></div><div class="mt-seq" aria-label="Sequência montada. Arraste para percorrer.">${seq}<span class="mt-head"></span></div></div></div><p class="dm-note">Arraste na sequência para percorrer · passe o mouse nos clipes do bruto</p>`;
   }
   if (kind === "reels") {
-    const pj = (C.projetos || []).find(p => /reels/i.test(p.tipo) && p.video) || (C.projetos || []).find(p => p.video) || {};
+    const pj = (C.projetos || []).find(p => p.formato === "9:16" && p.video) || (C.projetos || []).find(p => p.video) || {};
     const bg = pj.capa ? `style="background-image:url('${blob(pj.capa)}')"` : "";
-    return `<div class="rl"><div class="rl-phone cap punch bar" ${bg} data-vid="${esc(pj.video || "")}"><video muted loop playsinline preload="none" aria-hidden="true"></video><span class="burn"><span class="rec"></span>REC</span><div class="rl-cap" aria-hidden="true"></div><div class="rl-bar"><i></i></div></div><div class="rl-opts"><span class="lbl mono">Ligue e desligue</span><button type="button" data-o="cap" aria-pressed="true">Legendas animadas</button><button type="button" data-o="punch" aria-pressed="true">Punch-in no corte</button><button type="button" data-o="bar" aria-pressed="true">Barra de retenção</button></div></div>`;
+    const v = `<video muted playsinline preload="none" aria-hidden="true"></video>`;
+    const ticks = RL_CUTS.map(c => `<b style="left:${(c / RL_LIM * 100).toFixed(2)}%"></b>`).join("");
+    return `<div class="rl" data-vid="${esc(pj.video || "")}"><figure class="rl-ph raw"><div class="rl-phone" ${bg}>${v}<span class="burn"><span class="rec"></span>BRUTO</span><span class="burn br">A001_C001</span></div><figcaption class="mono">Cru</figcaption></figure><figure class="rl-ph ed"><div class="rl-phone" ${bg}>${v}<span class="burn"><span class="rec"></span>FINAL</span><div class="rl-cut"><span>CORTE 1/${RL_CUTS.length + 1}</span></div><div class="rl-bar"><i></i>${ticks}</div></div><figcaption class="mono">Editado</figcaption></figure><ul class="rl-list"><li><span class="k mono">Cor</span><span class="x">imagem lavada, sem look</span><span class="ok">look de cor aplicado</span></li><li><span class="k mono">Ritmo</span><span class="x">um plano só, sem corte</span><span class="ok">${RL_CUTS.length + 1} planos em ${RL_LIM} s, cortes no tempo certo</span></li><li><span class="k mono">Entrega</span><span class="ok">vertical 9:16, 1080×1920, pronto para Reels</span></li></ul></div>`;
   }
   if (kind === "motion") {
     const word = "Motion".split("").map((c, i) => `<span style="--i:${i}">${c}</span>`).join("");
@@ -1093,23 +1097,26 @@ const DEMOS = {
   },
   reels: {
     init(li) {
-      const ph = li.querySelector(".rl-phone"), cap = ph.querySelector(".rl-cap"), st = li._rl = { n: 0, timer: 0 };
-      li.querySelectorAll(".rl-opts button").forEach(b => b.addEventListener("click", e => {
-        e.stopPropagation(); const on = b.getAttribute("aria-pressed") !== "true"; b.setAttribute("aria-pressed", on); ph.classList.toggle(b.dataset.o, on);
-      }));
-      st.tick = () => {
-        const g = Math.floor(st.n / 3) * 3, grp = RL_WORDS.slice(g, g + 3);
-        cap.innerHTML = grp.map((w, k) => `<span class="${g + k === st.n ? "on" : ""}">${esc(w)}</span>`).join("");
-        st.n = (st.n + 1) % RL_WORDS.length;
+      const rl = li.querySelector(".rl"), vr = rl.querySelector(".raw video"), ve = rl.querySelector(".ed video");
+      const fill = rl.querySelector(".rl-bar i"), cut = rl.querySelector(".rl-cut"), lab = cut.querySelector("span");
+      const st = li._rl = { on: false, n: -1 };
+      st.loop = () => {
+        if (!st.on) return;
+        for (const v of [vr, ve]) if (v.currentTime >= RL_LIM) v.currentTime = 0;
+        const t = ve.currentTime, n = RL_CUTS.filter(c => t >= c).length;
+        fill.style.width = (t / RL_LIM * 100) + "%";
+        if (n !== st.n) { st.n = n; lab.textContent = `CORTE ${n + 1}/${RL_CUTS.length + 1}`; cut.classList.remove("pop"); void cut.offsetWidth; cut.classList.add("pop"); }
+        requestAnimationFrame(st.loop);
       };
     },
     start(li) {
-      const st = li._rl, ph = li.querySelector(".rl-phone"), v = ph.querySelector("video"); if (!st || st.timer) return;
-      const id = ph.dataset.vid; if (id && v && !v.getAttribute("src")) v.src = demoSrc(id);
-      if (v && v.getAttribute("src")) { const pr = v.play(); if (pr && pr.catch) pr.catch(() => {}); }
-      st.tick(); st.timer = setInterval(st.tick, 380);
+      const st = li._rl; if (!st || st.on) return;
+      const rl = li.querySelector(".rl"), id = rl.dataset.vid, vs = rl.querySelectorAll("video");
+      vs.forEach(v => { if (id && !v.getAttribute("src")) v.src = demoSrc(id); v.currentTime = 0; const pr = v.play(); if (pr && pr.catch) pr.catch(() => {}); });
+      rl.querySelector(".raw video").playbackRate = .6;
+      st.on = true; requestAnimationFrame(st.loop);
     },
-    stop(li) { const st = li._rl; if (!st) return; clearInterval(st.timer); st.timer = 0; const v = li.querySelector(".rl-phone video"); if (v) v.pause(); }
+    stop(li) { const st = li._rl; if (!st) return; st.on = false; li.querySelectorAll(".rl video").forEach(v => v.pause()); }
   },
   motion: {
     init(li) {
