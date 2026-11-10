@@ -455,28 +455,35 @@ header.top { view-transition-name: site-header; }
 .snd-btn:hover, .snd-btn[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
 .ba .ba-play { position: absolute; top: 0; bottom: 0; left: 0; width: 1px; background: rgba(241,239,233,.55); pointer-events: none; z-index: 1; }
 
-/* Reels: o mesmo plano cru x editado, com os cortes reais marcados na barra */
-.rl { display: grid; grid-template-columns: auto auto minmax(0, 1fr); gap: clamp(14px, 2.4vw, 28px); align-items: end; }
-.rl-ph { margin: 0; display: grid; gap: 10px; justify-items: center; }
-.rl-ph figcaption { color: var(--muted); }
-.rl-ph.ed figcaption { color: var(--fg); }
-.rl-phone { position: relative; width: clamp(150px, 19vw, 200px); aspect-ratio: 9 / 16; background: #070707 center / cover no-repeat; overflow: hidden; border-radius: 22px; border: 3px solid #1c1c1b; isolation: isolate; }
-.rl-phone video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
-.rl-ph.raw video { filter: grayscale(.55) contrast(.62) brightness(1.18) saturate(.7); }
-.rl-phone .burn { z-index: 4; font-size: 9px; top: 10px; left: 12px; display: flex; gap: 5px; align-items: center; }
-.rl-phone .burn.br { top: auto; left: auto; bottom: 14px; right: 12px; }
-.rl-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 5px; z-index: 4; background: rgba(255,255,255,.22); }
-.rl-bar i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--rec); }
-.rl-bar b { position: absolute; top: -3px; bottom: 0; width: 2px; margin-left: -1px; background: #f1efe9; }
-.rl-cut { position: absolute; left: 0; right: 0; top: 28px; z-index: 4; text-align: center; font: 500 11px/1 var(--f-mono); letter-spacing: .08em; color: #f1efe9; }
-.rl-cut span { display: inline-block; padding: 4px 7px; background: rgba(0,0,0,.55); }
-.rl-cut.pop span { animation: rlPop .35s var(--ease); }
-@keyframes rlPop { from { background: var(--rec); transform: scale(1.15); } }
-.rl-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); align-self: center; min-width: 0; }
-.rl-list li { padding: 12px 0; border-bottom: 1px solid var(--line); display: grid; gap: 3px; font-size: 15px; }
+/* Reels: feed vertical no celular, os cortes passam um a um, devagar */
+.rl { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(20px, 3.5vw, 44px); align-items: center; }
+.rl-phone { position: relative; width: clamp(190px, 23vw, 232px); aspect-ratio: 9 / 16; background: #070707 center / cover no-repeat; overflow: hidden; border-radius: 26px; border: 3px solid #1c1c1b; isolation: isolate; cursor: pointer; }
+.rl-feed { position: absolute; inset: 0; display: flex; flex-direction: column; transition: transform 1.1s var(--ease); }
+.rl-item { flex: 0 0 100%; position: relative; background: #070707; }
+.rl-item video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.rl-ui { position: absolute; inset: 0; z-index: 3; pointer-events: none; color: #fff; text-shadow: 0 1px 6px rgba(0,0,0,.7); }
+.rl-top { position: absolute; top: 12px; left: 14px; right: 14px; display: flex; justify-content: space-between; align-items: center; font: 600 15px/1 var(--f-sans); letter-spacing: -.01em; }
+.rl-top .rec { box-shadow: none; }
+.rl-side { position: absolute; right: 9px; bottom: 74px; display: grid; gap: 15px; justify-items: center; }
+.rl-side button { pointer-events: auto; background: none; border: 0; padding: 4px; color: #fff; cursor: pointer; display: grid; transition: transform .35s var(--ease), color .2s; }
+.rl-side button:hover { transform: scale(1.12); }
+.rl-side svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 1px 3px rgba(0,0,0,.6)); }
+.rl-side button[aria-pressed="true"] { color: var(--rec); }
+.rl-side button[aria-pressed="true"] svg { fill: currentColor; }
+.rl-info { position: absolute; left: 12px; right: 50px; bottom: 16px; font-size: 12px; line-height: 1.3; }
+.rl-info b { font-weight: 600; }
+.rl-info i { font-style: normal; font-size: 10px; border: 1px solid rgba(255,255,255,.75); padding: 2px 6px; margin-left: 8px; }
+.rl-info p { margin: 4px 0 0; font-size: 11px; opacity: .9; }
+.rl-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(255,255,255,.28); }
+.rl-bar i { display: block; height: 100%; width: 0; background: #fff; }
+.rl-dots { position: absolute; right: 7px; top: 50%; transform: translateY(-50%); display: grid; gap: 5px; z-index: 3; }
+.rl-dots span { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,.4); transition: background .4s, transform .4s var(--ease); }
+.rl-dots span.on { background: #fff; transform: scale(1.5); }
+.rl-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); min-width: 0; }
+.rl-list li { padding: 13px 0; border-bottom: 1px solid var(--line); display: grid; gap: 3px; font-size: 15px; }
 .rl-list .k { color: var(--muted); }
-.rl-list .x { color: var(--muted); text-decoration: line-through; text-decoration-thickness: 1px; }
 .rl-list .ok { color: var(--fg); }
+.rl-hint { grid-column: 1 / -1; margin: 0; }
 
 /* Motion: curva de animação ao vivo */
 .mo { display: grid; grid-template-columns: minmax(0, 1fr) 200px; gap: 16px; align-items: stretch; }
@@ -511,7 +518,7 @@ header.top { view-transition-name: site-header; }
   .mt-prev { width: 96px; }
   .mt-raw, .mt-clip { height: 48px; } .mt-raw i { --tw: calc(48px * 9 / 16); } .mt-seq { min-height: 48px; } .mt-clip em { display: none; }
   .mo { grid-template-columns: 1fr; }
-  .rl { grid-template-columns: 1fr 1fr; align-items: start; } .rl-list { grid-column: 1 / -1; } .rl-phone { width: 100%; }
+  .rl { grid-template-columns: 1fr; justify-items: center; } .rl-list { justify-self: stretch; width: 100%; } .rl-phone { width: min(230px, 70vw); }
 }
 
 /* descrições mantêm parágrafos e tópicos */
@@ -841,7 +848,7 @@ const txt = v => typeof v === "string" ? v : (v && v.texto) || "";
 const put = (el, v) => { el.textContent = txt(v); el.classList.toggle("ph", !!(v && v.ph)); };
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const lerp = (a, b, t) => a + (b - a) * t;
-const MEDIA = {"d3f47e9a34bf8f211cd979f08f7fe7a8": "d3f47e9a34bf8f211cd979f08f7fe7a8.jpg", "04a556e0e52ff9d01bb2394e06509333": "04a556e0e52ff9d01bb2394e06509333.jpg", "ecf18a89f9bbef85f5bea03ee5c089bb": "ecf18a89f9bbef85f5bea03ee5c089bb.jpg", "1074c4cd58b65efa146efe8f3f9124d6": "1074c4cd58b65efa146efe8f3f9124d6.jpg", "bcb02679b9024fbf0bfe4efb795ef776": "bcb02679b9024fbf0bfe4efb795ef776.jpg", "169e089838c84c97e050ae377cb24bff": "169e089838c84c97e050ae377cb24bff.jpg", "62ca7760b26f17e27be805e58a3f22ab": "62ca7760b26f17e27be805e58a3f22ab.mp4", "singular-cast-1080p": "singular-cast-1080p.mp4", "0f67741b78c1367293d5cb7700c17254": "0f67741b78c1367293d5cb7700c17254.mp4", "188381caa18ed300e06bb34976de81cb": "188381caa18ed300e06bb34976de81cb.jpg", "5b9d4dce557aae3ffef5ad902ea94c41": "5b9d4dce557aae3ffef5ad902ea94c41.mp4", "e05694cefa745fab6f1b9cb70f83f5c7": "e05694cefa745fab6f1b9cb70f83f5c7.jpg", "bb8a5831ff66c8bf51fe340bfe59ac9d": "bb8a5831ff66c8bf51fe340bfe59ac9d.mp4", "4d5aa3a513cec9aca4d25ae57871bcfd": "4d5aa3a513cec9aca4d25ae57871bcfd.jpg", "234ecb7d3e1ef7f54f1645dcdf2c6d8e": "234ecb7d3e1ef7f54f1645dcdf2c6d8e.mp4", "cg-antes": "cg-antes.jpg", "sv-strip": "sv-strip.jpg", "som-antes": "som-antes.mp3", "som-depois": "som-depois.mp3", "cg-depois": "cg-depois.jpg", "prev-0f67741b": "prev-0f67741b.mp4", "prev-234ecb7d": "prev-234ecb7d.mp4", "prev-5b9d4dce": "prev-5b9d4dce.mp4", "prev-62ca7760": "prev-62ca7760.mp4", "prev-bb8a5831": "prev-bb8a5831.mp4", "prev-singular": "prev-singular.mp4"};
+const MEDIA = {"d3f47e9a34bf8f211cd979f08f7fe7a8": "d3f47e9a34bf8f211cd979f08f7fe7a8.jpg", "04a556e0e52ff9d01bb2394e06509333": "04a556e0e52ff9d01bb2394e06509333.jpg", "ecf18a89f9bbef85f5bea03ee5c089bb": "ecf18a89f9bbef85f5bea03ee5c089bb.jpg", "1074c4cd58b65efa146efe8f3f9124d6": "1074c4cd58b65efa146efe8f3f9124d6.jpg", "bcb02679b9024fbf0bfe4efb795ef776": "bcb02679b9024fbf0bfe4efb795ef776.jpg", "169e089838c84c97e050ae377cb24bff": "169e089838c84c97e050ae377cb24bff.jpg", "62ca7760b26f17e27be805e58a3f22ab": "62ca7760b26f17e27be805e58a3f22ab.mp4", "singular-cast-1080p": "singular-cast-1080p.mp4", "0f67741b78c1367293d5cb7700c17254": "0f67741b78c1367293d5cb7700c17254.mp4", "188381caa18ed300e06bb34976de81cb": "188381caa18ed300e06bb34976de81cb.jpg", "5b9d4dce557aae3ffef5ad902ea94c41": "5b9d4dce557aae3ffef5ad902ea94c41.mp4", "e05694cefa745fab6f1b9cb70f83f5c7": "e05694cefa745fab6f1b9cb70f83f5c7.jpg", "bb8a5831ff66c8bf51fe340bfe59ac9d": "bb8a5831ff66c8bf51fe340bfe59ac9d.mp4", "4d5aa3a513cec9aca4d25ae57871bcfd": "4d5aa3a513cec9aca4d25ae57871bcfd.jpg", "234ecb7d3e1ef7f54f1645dcdf2c6d8e": "234ecb7d3e1ef7f54f1645dcdf2c6d8e.mp4", "cg-antes": "cg-antes.jpg", "sv-strip": "sv-strip.jpg", "som-antes": "som-antes.mp3", "reel-1": "reel-1.mp4", "reel-2": "reel-2.mp4", "reel-3": "reel-3.mp4", "som-depois": "som-depois.mp3", "cg-depois": "cg-depois.jpg", "prev-0f67741b": "prev-0f67741b.mp4", "prev-234ecb7d": "prev-234ecb7d.mp4", "prev-5b9d4dce": "prev-5b9d4dce.mp4", "prev-62ca7760": "prev-62ca7760.mp4", "prev-bb8a5831": "prev-bb8a5831.mp4", "prev-singular": "prev-singular.mp4"};
 const blob = id => id && MEDIA[id] ? "media/" + MEDIA[id] : "";
 // prévia leve (480px, 8 s, sem áudio) usada na lista; o vídeo completo só carrega na página do projeto
 const prevBlob = id => { const k = "prev-" + String(id || "").slice(0, 8); return MEDIA[k] ? "media/" + MEDIA[k] : blob(id); };
@@ -1007,7 +1014,7 @@ function setImg(holder, imgEl, id) {
   else { imgEl.hidden = true; imgEl.removeAttribute("src"); holder.classList.remove("has-img"); }
 }
 // ---------- Demonstrações dos serviços ----------
-const DEMO_IDS = {antes:"cg-antes",depois:"cg-depois",strip:"sv-strip",somA:"som-antes",somD:"som-depois"};
+const DEMO_IDS = {antes:"cg-antes",depois:"cg-depois",strip:"sv-strip",somA:"som-antes",somD:"som-depois",reels:["reel-1","reel-2","reel-3"]};
 const demoKind = s => s.demo || (/montagem|narrativa/i.test(s.nome) ? "montagem" : /color|cor\b/i.test(s.nome) ? "cor" : /reels|shorts|tiktok/i.test(s.nome) ? "reels" : /motion/i.test(s.nome) ? "motion" : /\bsom\b|mixagem/i.test(s.nome) ? "som" : "");
 const demoSrc = id => (typeof prevBlob === "function" ? prevBlob(id) : blob(id));
 const MT_DUR = [2.4, 1.6, 2.2, 1.8, 2.6, 2.0, 2.4, 2.2, 2.8, 2.2, 3.0, 3.8];
@@ -1029,7 +1036,6 @@ const bezier = (x1, y1, x2, y2) => {
     return Y(t);
   };
 };
-const RL_LIM = 8, RL_CUTS = [2.8, 4.17, 5.17, 6.5];   // cortes reais do Fashion Film nos primeiros 8 s
 
 function demoHTML(kind, s) {
   if (kind === "cor") {
@@ -1046,11 +1052,14 @@ function demoHTML(kind, s) {
     return `<div class="mt" style="--strip:url('${blob(DEMO_IDS.strip)}')"><div class="mt-prev" style="--k:0"><span class="burn tl"><span class="rec"></span>PGM</span><span class="burn bl mt-tc">00:00:00:00</span></div><div class="mt-body"><div class="mt-lbl mono"><span>Take bruto · A001_C001</span><span>1 clipe contínuo</span></div><div class="mt-raw" aria-hidden="true">${raw}<span class="mt-razor"></span></div><div class="mt-lbl mono"><span>Montagem</span><span>${MT_DUR.length} cortes · ${tot.toFixed(0)} s</span></div><div class="mt-seq" aria-label="Sequência montada. Arraste para percorrer.">${seq}<span class="mt-head"></span></div></div></div><p class="dm-note">O take bruto é cortado e vira a sequência · depois arraste na sequência para percorrer</p>`;
   }
   if (kind === "reels") {
-    const pj = (C.projetos || []).find(p => p.formato === "9:16" && p.video) || (C.projetos || []).find(p => p.video) || {};
+    const pj = (C.projetos || []).find(p => /reels/i.test(p.tipo) && p.video) || (C.projetos || []).find(p => p.video) || {};
+    const ig = (C.redes || []).find(r => /instagram/i.test(r.nome));
+    const handle = esc((ig && ig.usuario) || "@jcesar.cp");
     const bg = pj.capa ? `style="background-image:url('${blob(pj.capa)}')"` : "";
-    const v = `<video muted playsinline preload="none" aria-hidden="true"></video>`;
-    const ticks = RL_CUTS.map(c => `<b style="left:${(c / RL_LIM * 100).toFixed(2)}%"></b>`).join("");
-    return `<div class="rl" data-vid="${esc(pj.video || "")}"><figure class="rl-ph raw"><div class="rl-phone" ${bg}>${v}<span class="burn"><span class="rec"></span>BRUTO</span><span class="burn br">A001_C001</span></div><figcaption class="mono">Cru</figcaption></figure><figure class="rl-ph ed"><div class="rl-phone" ${bg}>${v}<span class="burn"><span class="rec"></span>FINAL</span><div class="rl-cut"><span>CORTE 1/${RL_CUTS.length + 1}</span></div><div class="rl-bar"><i></i>${ticks}</div></div><figcaption class="mono">Editado</figcaption></figure><ul class="rl-list"><li><span class="k mono">Cor</span><span class="x">imagem lavada, sem look</span><span class="ok">look de cor aplicado</span></li><li><span class="k mono">Ritmo</span><span class="x">um plano só, sem corte</span><span class="ok">${RL_CUTS.length + 1} planos em ${RL_LIM} s, cortes no tempo certo</span></li><li><span class="k mono">Entrega</span><span class="ok">vertical 9:16, 1080×1920, pronto para Reels</span></li></ul></div>`;
+    const items = DEMO_IDS.reels.map(id => `<div class="rl-item"><video muted playsinline preload="none" data-src="${blob(id)}" aria-hidden="true"></video></div>`).join("");
+    const dots = DEMO_IDS.reels.map(() => "<span></span>").join("");
+    const svg = d => `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${d}"/></svg>`;
+    return `<div class="rl"><div class="rl-phone" ${bg} aria-label="Feed de Reels. Toque para o próximo corte."><div class="rl-feed">${items}</div><div class="rl-dots">${dots}</div><div class="rl-ui"><div class="rl-top"><span>Reels</span><span class="rec" aria-hidden="true"></span></div><div class="rl-side"><button type="button" aria-pressed="false" aria-label="Curtir">${svg("M12 21s-7.5-4.6-9.5-9.3C1 8.2 3.2 5 6.4 5c2.1 0 3.9 1.2 5.6 3.4C13.700 6.200 15.500 5 17.600 5c3.200 0 5.400 3.200 3.900 6.700C19.500 16.400 12 21 12 21z")}</button><button type="button" tabindex="-1" aria-hidden="true">${svg("M21 12a8.500 8.500 0 01-12.300 7.600L3 21l1.500-5.400A8.500 8.500 0 1121 12z")}</button><button type="button" tabindex="-1" aria-hidden="true">${svg("M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z")}</button></div><div class="rl-info"><b>${handle}</b><i>Seguir</i><p class="rl-cap">Corte de podcast · trecho 1 de ${DEMO_IDS.reels.length}</p></div><div class="rl-bar"><i></i></div></div></div><ul class="rl-list"><li><span class="k mono">Gancho</span><span class="ok">os primeiros segundos decidem quem continua assistindo</span></li><li><span class="k mono">Legenda</span><span class="ok">sincronizada com a fala, para entender sem som</span></li><li><span class="k mono">Ritmo</span><span class="ok">cortes secos, sem pausa morta, mantendo a naturalidade</span></li><li><span class="k mono">Formato</span><span class="ok">vertical 9:16, pronto para Reels, TikTok e Shorts</span></li></ul><p class="dm-note rl-hint">Clique no celular para passar para o próximo corte</p></div>`;
   }
   if (kind === "motion") {
     const word = "Motion".split("").map(c => `<span>${c}</span>`).join("");
@@ -1062,7 +1071,7 @@ function demoHTML(kind, s) {
 
 function serviceHTML(s, i) {
   const kind = demoKind(s);
-  const tag = kind ? `<span class="ba-tag">${({ cor: "antes / depois", som: "antes / depois", montagem: "timeline", reels: "ao vivo", motion: "curvas" })[kind]}</span>` : "";
+  const tag = kind ? `<span class="ba-tag">${({ cor: "antes / depois", som: "antes / depois", montagem: "timeline", reels: "feed", motion: "curvas" })[kind]}</span>` : "";
   const box = kind ? `<section class="ba-wrap"><div><div class="dm dm-${kind}">${demoHTML(kind, s)}</div></div></section>` : "";
   return `<li class="svc${kind ? " has-ba" : ""}"${kind ? ` data-demo="${kind}"` : ""}><div><span class="n mono">${pad(i + 1)}</span><h3>${esc(s.nome)}${tag}</h3><p>${esc(s.texto)}</p></div>${box}</li>`;
 }
@@ -1146,26 +1155,35 @@ const DEMOS = {
   },
   reels: {
     init(li) {
-      const rl = li.querySelector(".rl"), vr = rl.querySelector(".raw video"), ve = rl.querySelector(".ed video");
-      const fill = rl.querySelector(".rl-bar i"), cut = rl.querySelector(".rl-cut"), lab = cut.querySelector("span");
-      const st = li._rl = { on: false, n: -1 };
+      const ph = li.querySelector(".rl-phone"), feed = ph.querySelector(".rl-feed"), vids = [...ph.querySelectorAll("video")], dots = [...ph.querySelectorAll(".rl-dots span")];
+      const bar = ph.querySelector(".rl-bar i"), cap = ph.querySelector(".rl-cap");
+      const st = li._rl = { on: false, i: 0, raf: 0, wait: 0, lock: false };
+      const N = vids.length;
+      st.go = i => {
+        st.i = (i + N) % N; clearTimeout(st.wait);
+        feed.style.transform = `translate3d(0, ${-st.i * 100}%, 0)`;
+        dots.forEach((d, n) => d.classList.toggle("on", n === st.i));
+        cap.textContent = `Corte de podcast · trecho ${st.i + 1} de ${N}`;
+        vids.forEach((v, n) => {
+          if (n !== st.i) { setTimeout(() => { if (n !== st.i) v.pause(); }, 1200); return; }
+          if (!v.getAttribute("src")) v.src = v.dataset.src;
+          v.currentTime = 0; const pr = v.play(); if (pr && pr.catch) pr.catch(() => {});
+        });
+        const nx = vids[(st.i + 1) % N]; if (!nx.getAttribute("src")) { nx.src = nx.dataset.src; nx.preload = "auto"; }
+      };
       st.loop = () => {
         if (!st.on) return;
-        for (const v of [vr, ve]) if (v.currentTime >= RL_LIM) v.currentTime = 0;
-        const t = ve.currentTime, n = RL_CUTS.filter(c => t >= c).length;
-        fill.style.width = (t / RL_LIM * 100) + "%";
-        if (n !== st.n) { st.n = n; lab.textContent = `CORTE ${n + 1}/${RL_CUTS.length + 1}`; cut.classList.remove("pop"); void cut.offsetWidth; cut.classList.add("pop"); }
-        requestAnimationFrame(st.loop);
+        const v = vids[st.i], d = v.duration || 7;
+        bar.style.width = Math.min(100, v.currentTime / d * 100) + "%";
+        if ((v.ended || v.currentTime >= d - .08) && !st.wait) st.wait = setTimeout(() => { st.wait = 0; if (st.on) st.go(st.i + 1); }, 700);
+        st.raf = requestAnimationFrame(st.loop);
       };
+      ph.addEventListener("click", e => { if (e.target.closest(".rl-side button")) return; if (st.on) st.go(st.i + 1); });
+      const heart = ph.querySelector('.rl-side button[aria-label="Curtir"]');
+      heart.addEventListener("click", e => { e.stopPropagation(); heart.setAttribute("aria-pressed", heart.getAttribute("aria-pressed") !== "true"); });
     },
-    start(li) {
-      const st = li._rl; if (!st || st.on) return;
-      const rl = li.querySelector(".rl"), id = rl.dataset.vid, vs = rl.querySelectorAll("video");
-      vs.forEach(v => { if (id && !v.getAttribute("src")) v.src = demoSrc(id); v.currentTime = 0; const pr = v.play(); if (pr && pr.catch) pr.catch(() => {}); });
-      rl.querySelector(".raw video").playbackRate = .6;
-      st.on = true; requestAnimationFrame(st.loop);
-    },
-    stop(li) { const st = li._rl; if (!st) return; st.on = false; li.querySelectorAll(".rl video").forEach(v => v.pause()); }
+    start(li) { const st = li._rl; if (!st || st.on) return; st.on = true; st.go(st.i); st.loop(); },
+    stop(li) { const st = li._rl; if (!st) return; st.on = false; clearTimeout(st.wait); st.wait = 0; cancelAnimationFrame(st.raf); li.querySelectorAll(".rl-phone video").forEach(v => v.pause()); }
   },
   motion: {
     init(li) {
