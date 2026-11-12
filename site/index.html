@@ -398,6 +398,36 @@ header.top { view-transition-name: site-header; }
 .portrait .inner .media-img { z-index: 1; }
 .has-img .lbl, .has-img canvas { display: none; }
 
+/* aviso do painel Animar */
+.anim-note { position: fixed; z-index: 2147483000; left: max(16px, env(safe-area-inset-left, 0px)); bottom: calc(var(--dock-h) + env(safe-area-inset-bottom, 0px) + 14px);
+  max-width: min(420px, calc(100vw - 32px)); padding: 10px 14px; background: var(--fg); color: var(--bg); font-size: 14px; box-shadow: 0 10px 30px -10px rgba(0,0,0,.5); }
+.anim-note[data-kind="err"] { background: var(--rec); color: #fff; }
+.edit-fab.on { background: var(--rec); color: #fff; }
+/* painel do DialKit abaixo do menu do topo e acima da timeline */
+body .dialkit-panel[data-position="top-right"] { top: calc(env(safe-area-inset-top, 0px) + 68px); right: max(16px, env(safe-area-inset-right, 0px));
+  max-height: calc(100vh - 68px - var(--dock-h) - 28px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)); }
+body .dialkit-panel[data-position="top-right"] .dialkit-panel-inner { max-height: calc(100dvh - 68px - var(--dock-h) - 28px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)) !important; overflow-y: auto; }
+
+/* Agentation: a barra fica acima da timeline do rodapé */
+#agentation-host { position: relative; z-index: 2147483001; }
+agentation-toolbar { bottom: calc(var(--dock-h) + 16px + env(safe-area-inset-bottom, 0px)) !important; }
+.fb-out { position: fixed; z-index: 2147483002; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(640px, calc(100vw - 32px));
+  background: var(--bg-2); color: var(--fg); border: 1px solid var(--line); padding: 16px; display: grid; gap: 10px; box-shadow: 0 30px 80px -20px rgba(0,0,0,.7); }
+.fb-out textarea { width: 100%; height: min(50vh, 360px); background: var(--bg); color: var(--fg); border: 1px solid var(--line); font: 12px/1.5 var(--f-mono); padding: 10px; resize: vertical; }
+.fb-out .row-b { display: flex; gap: 8px; justify-content: flex-end; }
+.fb-out button { background: var(--fg); color: var(--bg); border: 0; font: 500 13px/1 var(--f-sans); padding: 10px 14px; cursor: pointer; }
+.fb-out button.sec { background: none; color: var(--fg); border: 1px solid var(--line); }
+
+/* Contato: título letra a letra, "?" entra girando (branco, como o resto do título), texto entra palavra por palavra */
+.contact-h .mask { padding-top: .15em; margin-top: -.15em; padding-bottom: .26em; margin-bottom: -.26em; }   /* espaço embaixo para o "g" não ser cortado */
+.cchar { display: inline-block; }
+.view.enter .cchar { animation: charIn .9s var(--ease) both; animation-delay: calc(var(--i) * 32ms + 80ms); }
+.qmark { display: inline-block; font-style: normal; font-weight: 400; color: var(--fg); transform-origin: 50% 85%; }
+.view.enter .qmark { animation: qIn .9s cubic-bezier(.34, 1.56, .64, 1) both; animation-delay: calc(var(--i) * 32ms + 260ms); }
+@keyframes qIn { from { transform: translateY(105%) rotate(-35deg); opacity: 0; } }
+.cw { display: inline-block; }
+.view.enter .cw { animation: fade .8s var(--ease) both; animation-delay: calc(var(--j) * 35ms + 650ms); }
+
 /* Demonstrações dos serviços: abrem ao passar o mouse ou tocar. Cada uma mostra a habilidade do item:
    montagem (timeline), cor (antes/depois), reels (legendas e cortes), motion (curvas) e som (forma de onda) */
 @property --p { syntax: "<number>"; inherits: true; initial-value: 50; }
