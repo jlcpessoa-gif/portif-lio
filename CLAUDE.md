@@ -132,6 +132,21 @@ GitHub recusa arquivos acima de 100 MB: mantenha cada vídeo abaixo de ~95 MB.
 O site também existe como artifact no claude.ai (https://claude.ai/artifact/Sr8gua7Nviaxa2xL2FfUvy), usado
 como área de testes com os botões Editar/Animar/Feedback. A versão oficial é ESTE repositório.
 
+### Combinado com o Júlio: tudo vai direto para a Vercel
+
+O endereço de produção hoje é https://jcesar-ten.vercel.app (o domínio `.com` próprio será ligado depois).
+Toda mudança que o Júlio faz ou pede (pelo chat, pelo Editar/Animar do claude.ai ou pelo Feedback) deve ir
+para o artifact E para este repositório (branch `main`) na mesma hora, sem esperar ele pedir "leva para o GitHub":
+- Mudou pelo Editar/Animar no claude.ai: a sessão é acordada ao salvar; leia o `content.json` publicado e leve
+  o conteúdo (textos, projetos, contatos, `animacao`) para `site/content.json`.
+- Pediu no chat ou pelo Feedback: aplique nos dois lugares (artifact e `site/`), teste e dê push na `main`.
+- Mídia nova entra com NOME NOVO e abaixo de ~95 MB (veja acima). O artifact limita cada arquivo a 20 MB, então
+  lá os vídeos são mais comprimidos que os de `site/media/`.
+- Antes do push: teste local, inclusive ~390px. Depois: confira que a Vercel respondeu (`gh api .../status`).
+- Peça confirmação só para o que for destrutivo ou não pedido: apagar projetos/arquivos, trocar vídeos já
+  publicados, mexer em domínio/DNS ou conta.
+- Fale com o Júlio SEMPRE aqui no chat (ele não quer respostas nos comentários do site).
+
 ## Vídeos
 
 Aqui os vídeos estão em qualidade maior (podcasts em 1080p ou no original 720p); no claude.ai o limite é 20 MB.
